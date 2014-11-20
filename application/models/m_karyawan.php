@@ -32,4 +32,46 @@ class m_karyawan extends CI_Model{
         $data = $query->result_array();
         return $data;
     }
+    //show by username
+    public function show_by_username($x){//$x = username
+        $this->db->where('username',$x);
+        $query = $this->db->get('pegawai');
+        return $query->row_array();
+    }
+    //cek absen hari ini
+    public function cek_absen_hari_ini($id_karyawan){
+        $sql = "SELECT * FROM absensi WHERE id_karyawan = ? AND DATE(tgl_terakhir) = CURDATE()";
+        $query = $this->db->query($sql,$id_karyawan);
+        if($query->num_rows()>0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //cek absen bulan dan tahun ini
+    public function cek_absen_bulan_tahun_ini($id_karyawan){
+        $month = date('m');
+        $year = date('Y');
+        $this->db->where('bulan',$month);
+        $this->db->where('tahun',$year);
+        $this->db->where('id_karyawan',$id_karyawan);
+        $query = $this->db->get('absensi');
+        if($query->num_rows()>0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //absen hari ini
+    public function absenToday(){//absen hari ini
+     $sql = "SELECT pegawai.nama AS 'name', absensi.tgl_terakhir AS 'tgl' FROM absensi 
+     INNER JOIN pegawai ON pegawai.id_pegawai = absensi.id_karyawan
+     WHERE DATE(absensi.tgl_terakhir) = CURDATE() ";
+     $query = $this->db->query($sql);
+     if($query->num_rows()>0){
+        return $query->result_array();
+    } else {
+        return array();
+    }
+}
 }
