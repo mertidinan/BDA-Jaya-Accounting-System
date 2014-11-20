@@ -34,14 +34,13 @@
 						<div class="form-group">
 							<label for="inputjumlah">Jumlah</label>
 							<div class="input-group">
-								<span class="input-group-addon">Rp</span><input name="inputJumlah" type="number" class="form-control" id="inputjumlah" placeholder="Jumlah tanpa titik"><span class="input-group-addon">.00</span>
+								<span class="input-group-addon">Rp</span><input name="inputJumlah" type="number" class="form-control" id="inputjumlah" placeholder="Jumlah tanpa titik" required><span class="input-group-addon">.00</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputstatus">Status</label>
-							<select name="inputStatus" class="form-control" id="inputstatus">
+							<select name="inputStatus" class="form-control" id="inputstatus" required>
 								<option value="lunas">Lunas</option>
-								<option value="Hutang">Hutang</option>
 							</select>
 						</div>
 						<div class="form-group">

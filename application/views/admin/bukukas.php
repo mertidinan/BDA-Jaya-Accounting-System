@@ -84,25 +84,27 @@
 						<div class="col-md-6">
 							<h5>Pemasukan <a href="#" onclick="addPemasukan()" class="btn-xs btn btn-default">+</a></h5>
 							<div style="display:none" id="addpemasukan" class"adduang">
-								<form class="formkas form-horizontal" role="form">
+								<form method="POST" action="<?php echo site_url('admin/admin_tambah_pemasukan');?>" class="formkas form-horizontal" role="form">
 									<div class="form-group">
 										<label for="inputEmail1" class="col-lg-2 control-label">Ket</label>
 										<div class="col-lg-10">
-											<textarea class="form-control"></textarea>
+											<textarea name="inputKet" class="form-control"></textarea>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword1" class="col-lg-2 control-label">Kategori</label>
 										<div class="col-lg-10">
-											<select class="form-control">
-												<option>kategori 1</option>
+											<select name="inputKat" class="form-control">
+												<?php foreach($kategori_pemasukan as $km):?>
+												<option value="<?php echo $km['id_kat_masuk']?>"><?php echo $km['det_kat_masuk']?></option>
+												<?php endforeach;?>
 											</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword1" class="col-lg-2 control-label">Rp</label>
 										<div class="col-lg-10">
-											<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
@@ -134,23 +136,27 @@
 						<div class="tabel-pengeluaran col-md-6">
 							<h5>Pengeluaran <a onclick="addPengeluaran()" href="#" class="btn-xs btn btn-default">+</a></h5>
 							<div style="display:none" id="addpengeluaran" class"adduang">
-								<form class="formkas form-horizontal" role="form">
+								<form method="POST" action="<?php echo site_url('admin/admin_tambah_pengeluaran');?>" class="formkas form-horizontal" role="form">
 									<div class="form-group">
-										<label for="inputEmail1" class="col-lg-2 control-label">Email</label>
+										<label for="inputEmail1" class="col-lg-2 control-label">Ket</label>
 										<div class="col-lg-10">
-											<input type="email" class="form-control" id="inputEmail1" placeholder="Email">
+											<textarea name="inputKet" class="form-control"></textarea>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+										<label for="inputPassword1" class="col-lg-2 control-label">Kategori</label>
 										<div class="col-lg-10">
-											<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+											<select name="inputKat" class="form-control">
+												<?php foreach($kategori_pengeluaran as $kk):?>
+												<option value="<?php echo $kk['id_kat_pengeluaran']?>"><?php echo $kk['det_kat_pengeluaran']?></option>
+												<?php endforeach;?>
+											</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword1" class="col-lg-2 control-label">Rp</label>
 										<div class="col-lg-10">
-											<input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
@@ -175,11 +181,25 @@
 									<td><?php echo $keluar['kategori']?></td>
 									<td><?php echo $keluar['status']?></td>
 									<td>Rp<?php echo $keluar['rp']?>,-</td>
-								</tr>
+								</tr>								
+								<?php
+								//total pengeluaran bln ini
+								?>
 								<?php $totkeluar = $totkeluar+$keluar['rp'];endforeach;?>
 							</table>
 						</div>
-
+						<?php
+						$totMasukBlnIni = 0;
+						$totKeluarBlnIni = 0;
+						//total pengeluaran bulan ini
+						foreach($pengeluaran_bln_ini as $kb):
+							$totKeluarBlnIni = $totKeluarBlnIni+$kb['rp'];
+						endforeach;
+						//total pemasukann bulan ini
+						foreach($pemasukan_bln_ini as $mb):
+							$totMasukBlnIni = $totMasukBlnIni+$mb['rp'];
+						endforeach;
+						?>
 					</div>
 					<div style="text-align:right" class="col-md-6"><strong>Total : Rp<?php echo $totmasuk;?>,-</strong></div>	
 					<div style="text-align:right" class="col-md-6"><strong>Total : Rp<?php echo $totkeluar;?>,-</strong></div>	
@@ -187,7 +207,8 @@
 					<div class="col-md-12">
 						<br/><br/>
 						<hr/>
-						<h4>Saldo Bulan Ini : Rp<?php echo $totmasuk - $totkeluar?>,-</h4>
+						<h4>Saldo Hari Ini : Rp<?php echo $totmasuk - $totkeluar?>,-</h4>
+						<h4>Saldo Bulan Ini : Rp<?php echo $totMasukBlnIni - $totKeluarBlnIni;?>,-</h4>
 					</div>				
 				</div>
 			</div>

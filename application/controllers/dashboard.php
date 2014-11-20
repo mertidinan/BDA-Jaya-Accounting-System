@@ -25,14 +25,20 @@ class dashboard extends base {
 			$data['bulan'] = $this->input->get('bln');
 			$data['tahun'] = $this->input->get('thn');
 			$params = array($data['tanggal'],$data['bulan'],$data['tahun']);
+			$bln_params = array($data['bulan'],$data['tahun']);
 		}else{
 			$data['tanggal'] = date('d');
 			$data['bulan'] = date('m');
 			$data['tahun'] = date('Y');
 			$params = array(date('d'),date('m'),date('Y'));
+			$bln_params = array(date('m'),date('Y'));
 		}
+		$data['kategori_pemasukan'] = $this->m_admin->show_all_kategoripemasukan();//menampilkan semua kategori pemasukan
+		$data['kategori_pengeluaran'] = $this->m_admin->show_all_kategoripengeluaran();//menampilkan semua kategori pengeluaran
 		$data['pengeluaran'] = $this->m_pengeluaran->showPengeluaran($params);
 		$data['pemasukan'] = $this->m_pemasukan->showPemasukan($params);
+		$data['pengeluaran_bln_ini'] = $this->m_pengeluaran->showPengeluaran_blnini($bln_params);//show pengeluaran bulan ini
+		$data['pemasukan_bln_ini'] = $this->m_pemasukan->showPemasukan_blnini($bln_params);//show pemasukan bulan ini;
 		$this->baseView('admin/bukukas',$data);
 	}	
 	//management kategori masuk keluar

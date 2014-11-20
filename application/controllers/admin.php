@@ -103,9 +103,53 @@ class admin extends base {
 			echo 'gagal memasukan pengeluaran';
 		}
 	}
-	// tambah pemasukan
-	public function tambah_pemasukan(){
-
+	//admin tambah pemasukan
+	public function admin_tambah_pemasukan(){
+		$this->load->library('user_agent');
+		$keterangan = $_POST['inputKet'];
+		$kategori = $_POST['inputKat'];
+		$jumlah = $_POST['inputRp'];
+		$oleh = $this->session->userdata('id_admin');
+		$status = 'lunas';
+		$data = array(
+			'keterangan'=>$keterangan,
+			'kategori'=>$kategori,
+			'rp'=>$jumlah,
+			'status'=>$status,
+			'oleh'=>$oleh
+			);
+		if($this->db->insert('pemasukan',$data)){
+			echo ("<SCRIPT LANGUAGE='JavaScript'>
+					window.alert('berhasil tambah data');
+					window.location.href='".$this->agent->referrer()."';
+				</SCRIPT>");
+		} else {
+			echo 'gagal masuk ke tabel pengeluaran';
+		}
+	}
+	//admin tambah pengeluaran
+	public function admin_tambah_pengeluaran(){
+		$this->load->library('user_agent');
+		$keterangan = $_POST['inputKet'];
+		$kategori = $_POST['inputKat'];
+		$jumlah = $_POST['inputRp'];
+		$oleh = $this->session->userdata('id_admin');
+		$status = 'lunas';
+		$data = array(
+			'keterangan'=>$keterangan,
+			'kategori'=>$kategori,
+			'rp'=>$jumlah,
+			'status'=>$status,
+			'oleh'=>$oleh
+			);
+		if($this->db->insert('pengeluaran',$data)){
+			echo ("<SCRIPT LANGUAGE='JavaScript'>
+					window.alert('berhasil tambah data');
+					window.location.href='".$this->agent->referrer()."';
+				</SCRIPT>");
+		} else {
+			echo 'gagal masuk ke tabel pengeluaran';
+		}
 	}
 	//logout
 	public function logout(){
