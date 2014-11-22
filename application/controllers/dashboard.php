@@ -292,4 +292,30 @@ class dashboard extends base {
 			$this->baseView('admin/karyawan',$data);
 		}
 	}
+
+	///////////////////////////////
+	//// ALL ABOUT PENJURNALAN ////
+	///////////////////////////////
+
+	//cek penjurnalan
+	public function jurnal(){
+		$data['title'] = "Penjurnalan";
+		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('jurnal').className = 'active';});</script>";
+		if(!empty($this->input->get())){
+			$data['tanggal'] = $this->input->get('tgl');
+			$data['bulan'] = $this->input->get('bln');
+			$data['tahun'] = $this->input->get('thn');
+			$params = array($data['tanggal'],$data['bulan'],$data['tahun']);
+			$bln_params = array($data['bulan'],$data['tahun']);
+		}else{
+			$data['tanggal'] = date('d');
+			$data['bulan'] = date('m');
+			$data['tahun'] = date('Y');
+			$params = array(date('d'),date('m'),date('Y'));
+			$bln_params = array(date('m'),date('Y'));
+		}
+		$data['pengeluaran_bln_ini'] = $this->m_pengeluaran->showPengeluaran_blnini($bln_params);//show pengeluaran bulan ini
+		$data['pemasukan_bln_ini'] = $this->m_pemasukan->showPemasukan_blnini($bln_params);//show pemasukan bulan ini;
+		$this->baseView('admin/jurnal',$data);
+	}
 }

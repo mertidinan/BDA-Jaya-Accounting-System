@@ -18,7 +18,7 @@
 				Kategori Masuk/Keluar
 			</a>
 		</li>
-		<li id="bukukas" class="">
+		<li id="jurnal" class="">
 			<a href="<?php echo site_url('dashboard/jurnal')?>">
 				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->
 				Jurnal

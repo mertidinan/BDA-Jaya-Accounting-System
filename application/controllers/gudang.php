@@ -364,18 +364,28 @@ class gudang extends base {
 				$this->db->query($sql);//
 				$this->db->insert('pasokan_item',$item); //query untuk memasukan transaksi item
 				endforeach;
-			//memasukan data keuangan
-			//ditunda
-			//membuat laporan
-				$log = array(
-					'id_pegawai'=>$this->session->userdata('id_pegawai'),
-					'id_pemasok'=>$pemasok,
-					'activity'=>'menambah pasokan dari pemasok : '.$pemasok.' | dengan id pasokan : '.$id_pasokan,
-					);
-			$this->db->insert('gudang_activity',$log);//memasukan log ke database
-			$this->cart->destroy();//membersihkan cart
-			//$this->baseView('gudang/pasokan');		
-			redirect(site_url('gudang/pasokan'));
+				//memasukan pengeluaran data keuangan
+				$pengeluaran = array(
+					'oleh'=>$this->session->userdata('id_pegawai'),
+					'keterangan'=>'tambah pasokan dengan id : '.$id_pasokan.' , atas nama karyawan dengan id :'.$this->session->userdata('id_pegawai'),
+					'rp'=>$totalBayar,
+					'kategori'=>6,
+					'id_pasokan'=>$id_pasokan,
+					'status'=>$status);
+				if($this->db->insert('pengeluaran',$pengeluaran)) {
+					//membuat laporan
+					$log = array(
+						'id_pegawai'=>$this->session->userdata('id_pegawai'),
+						'id_pemasok'=>$pemasok,
+						'activity'=>'menambah pasokan dari pemasok : '.$pemasok.' | dengan id pasokan : '.$id_pasokan,
+						);
+					$this->db->insert('gudang_activity',$log);//memasukan log ke database
+					$this->cart->destroy();//membersihkan cart
+					//$this->baseView('gudang/pasokan');		
+					redirect(site_url('gudang/pasokan'));
+				} else {
+					echo 'data gagal masuk tabel pengeluaran';
+				}				
 		} else{
 			//gagal masuk ketabel pasokan
 		}
