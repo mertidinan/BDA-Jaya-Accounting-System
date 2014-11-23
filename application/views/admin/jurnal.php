@@ -78,34 +78,133 @@
 								<th>Kredit</th>
 							</tr>
 							<?php $totaldebit=0;$totalkredit=0;?>
-							<?php $jurnal = array('masuk'=>$pemasukan_bln_ini,'keluar'=>$pengeluaran_bln_ini);print_r($jurnal);?>
-							<?php foreach($pemasukan_bln_ini as $masuk):?>
-								<?php foreach($pengeluaran_bln_ini as $keluar):?>
-									<tr>
-										<td><?php echo date('d',strtotime($masuk['tanggal']));?></td>
-										<td><?php echo 'kas<br/><span style="padding-left:2em"></span>'.$masuk['keterangan'];?></td>
-										<td></td>
-										<td><?php echo 'Rp '.$masuk['rp'].'<br/>'?></td>
-										<td><?php echo '<br/>'.'Rp '.$masuk['rp'].',-'?></td>
-									</tr>
-									
-									<tr>
-										<td><?php echo date('d',strtotime($keluar['tanggal']));?></td>
-										<td><?php echo $keluar['keterangan'].'<br/><span style="padding-left:2em"></span>kas';?></td>
-										<td></td>										
-										<td><?php echo '<br/>'.'Rp '.$keluar['rp']?></td>
-										<td><?php echo 'Rp '.$keluar['rp'].',-<br/>'?></td>
-									</tr>	
-																									
-								<?php endforeach;?>								
-							<?php endforeach;?> 
+							<?php $jurnalmerge = array_merge($pemasukan_bln_ini,$pengeluaran_bln_ini);
+							//sortir berdasarkan tanggal
+							function sort_array_by_value($key, &$array) {
+							    $sorter = array();
+							    $ret = array();
+
+							    reset($array);
+
+							    foreach($array as $ii => $value) {
+							        $sorter[$ii] = $value[$key];
+							    }
+
+							    asort($sorter);
+
+							    foreach($sorter as $ii => $value) {
+							        $ret[$ii] = $array[$ii];
+							    }
+
+							    $array = $ret;
+							}
+							sort_array_by_value('tanggal',$jurnalmerge);
+							?>
+							<?php foreach($jurnalmerge as $jurnal):?>								
+								<tr>
+									<td><?php echo date('d',strtotime($jurnal['tanggal']));?></td>
+									<td>
+										<?php if($jurnal['det']=='masuk') {
+											if($jurnal['status']=='piutang') { //jika masih piutang
+												echo 'Kas<br/>';
+												echo '<span style="padding-left:2em">Piutang '.$jurnal['keterangan'].'</span><br/>';
+												echo '<span style="padding-left:2em">Pendapatan</span><br/>';
+											} else {
+												//jika sudah lunas
+												echo 'Kas<br/><span style="padding-left:2em"> '.$jurnal['keterangan'].'</span>';
+											}											
+										} else if($jurnal['det']=='keluar'){ //keluar
+											if($jurnal['status']=='hutang'){//jika masih hutang
+												echo 'Pasokan : '.$jurnal['keterangan'].'<br/>';
+												echo '<span style="padding-left:2em">Kas<span/><br/>';
+												echo '<span style="padding-left:2em">Hutang</span>';												
+											} else { //hutang sudah lunas
+												echo $jurnal['keterangan'].'<br/><span style="padding-left:2em">Kas</span>';
+											}
+										}?>
+									</td>
+									<td>
+										
+									</td>
+									<td>
+										<?php
+											if($jurnal['det']=='masuk') { //masuk
+												if($jurnal['status']=='piutang'){ //jika masih piutang
+													//cek detail transaksi
+													$this->db->where('id_transaksi',$jurnal['id_transaksi']);
+													$transaksi = $this->db->get('transaksi');
+													$transaksi = $transaksi->row_array();
+													echo 'Rp '.$this->cart->format_number($transaksi['bayar']).',-<br/>';
+													echo 'Rp '.$this->cart->format_number($jurnal['rp']-$transaksi['bayar']).',-<br/>';
+												} else { //sudah lunas
+													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+												}
+											} else if($jurnal['det']=='keluar'){ //keluar
+												if($jurnal['status']=='hutang'){//jika masih hutang													
+													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+												} else { //hutang sudah lunas
+													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+												}
+											} else {
+												echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+											}																					
+											$totaldebit = $totaldebit + $jurnal['rp']; ?>
+									</td>
+									<td>
+										<?php
+											if($jurnal['det']=='masuk') {
+												if($jurnal['status']=='piutang'){ //jika masih piutang
+													echo '<br/><br/>';
+													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';	
+												} else { //sudah lunas
+													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';
+												}
+											} else if($jurnal['det']=='keluar'){ //keluar
+												if($jurnal['status']=='hutang'){//jika masih hutang
+													$this->db->where('id_pasokan',$jurnal['id_pasokan']);
+													$pasokan = $this->db->get('pasokan');
+													$pasokan = $pasokan->row_array();
+													echo '<br/>Rp '.$this->cart->format_number($pasokan['rp_bayar']).',-';
+													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp'] - $pasokan['rp_bayar']).',-';
+												} else { //hutang sudah lunas
+													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';		
+												}
+											} else {
+												echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';		
+											}															
+											$totalkredit = $totalkredit + $jurnal['rp'];?>
+									</td>
+								</tr>																							
+							<?php endforeach;?>
+							<?php
+							$akhir31 = array(1,3,5,7,8,10,12);
+							//perhitungan gaji pegawai
+							if($bulan == 2 && $tahun%4 == 0) {
+								$tgl = 29;
+							} else if($bulan == 2 && $tahun%4 != 0) {
+								$tgl = 28;
+							} else if(in_array($bulan, $akhir31)) {
+								$tgl = 31;
+							} else {
+								$tgl = 30;
+							} 
+							?>
+							<?php if($total_gaji != 0){?>
 							<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td><strong>Rp <?php echo $totaldebit;?> </strong></td>
-									<td><strong>Rp <?php echo $totalkredit;?> </strong></td>
-								</tr>
+								<td><?php echo $tgl?></td>
+								<td>Pemberian gaji karyawan<br/><span style="padding-left:2em">Kas</span></td>
+								<td></td>
+								<td><?php echo $this->cart->format_number($total_gaji * 30000);?></td>
+								<td><?php echo '<br/>'.$this->cart->format_number($total_gaji * 30000);?></td>
+							</tr>
+							<?php } ?>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td><strong>Rp <?php echo $this->cart->format_number($totaldebit);?> </strong></td>
+								<td><strong>Rp <?php echo $this->cart->format_number($totalkredit);?> </strong></td>
+							</tr>
 						</table>
 						</div>
 					</div>

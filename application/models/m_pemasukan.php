@@ -16,7 +16,7 @@ class m_pemasukan extends CI_Model{
 	//menampilkan pemasukan bulan ini
 	public function showPemasukan_blnini($params){//bln , tahun
 		$sql = "SELECT pemasukan.id_pemasukan AS  'id_pemasukan', pemasukan.tanggal AS  'tanggal', pemasukan.rp AS  'rp', kategori_pemasukan.det_kat_masuk AS 'kategori', 
-		pemasukan.status AS  'status',pemasukan.keterangan AS 'keterangan'
+		pemasukan.status AS  'status',pemasukan.keterangan AS 'keterangan',det,id_transaksi
 		FROM pemasukan
 		INNER JOIN kategori_pemasukan ON kategori_pemasukan.id_kat_masuk = pemasukan.kategori
 		AND MONTH( pemasukan.tanggal ) =  ?

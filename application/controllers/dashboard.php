@@ -5,6 +5,7 @@ class dashboard extends base {
 		parent::__construct();
 		$this->admin_logged_in();
 		$this->load->model('m_admin');
+		$this->load->library('cart');
 	}
 	public function index(){
 		$data['title'] = "Admin";
@@ -314,6 +315,7 @@ class dashboard extends base {
 			$params = array(date('d'),date('m'),date('Y'));
 			$bln_params = array(date('m'),date('Y'));
 		}
+		$data['total_gaji'] = $this->m_karyawan->total_gaji_bln_ini($bln_params);
 		$data['pengeluaran_bln_ini'] = $this->m_pengeluaran->showPengeluaran_blnini($bln_params);//show pengeluaran bulan ini
 		$data['pemasukan_bln_ini'] = $this->m_pemasukan->showPemasukan_blnini($bln_params);//show pemasukan bulan ini;
 		$this->baseView('admin/jurnal',$data);

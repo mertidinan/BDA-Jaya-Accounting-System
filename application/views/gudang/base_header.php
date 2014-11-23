@@ -58,7 +58,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>Admin : </strong><?php echo $this->session->userdata('nama');?> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Edit Profile</a></li>
+						<!-- <li><a href="#">Edit Profile</a></li> -->
 						<li><a href="<?php echo site_url('admin/logout')?>">Logout</a></li>
 					</ul>
 				</li>

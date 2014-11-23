@@ -74,4 +74,16 @@ class m_karyawan extends CI_Model{
         return array();
     }
 }
+
+    //tentang penggajian
+    public function total_gaji_bln_ini($params){
+        $sql = "SELECT total  FROM absensi WHERE bulan = ? AND tahun = ?";
+        $query = $this->db->query($sql,$params);
+        $query = $query->result_array();
+        $total = 0;
+        foreach($query as $q):
+            $total = $total + $q['total'];
+        endforeach;
+        return $total;
+    }
 }

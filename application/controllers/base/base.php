@@ -44,4 +44,6 @@ class base extends CI_Controller {
 			redirect(site_url('admin'));
 		}
 	}
+	//admin function
+	
 }
