@@ -24,6 +24,24 @@
 				Jurnal
 			</a>
 		</li>
+		<li id="bukubesar">
+			<a href="<?php echo site_url('dashboard/buku_besar')?>">
+				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->
+				Buku Besar
+			</a>
+		</li>
+		<li id="neraca">
+			<a href="<?php echo site_url('dashboard/jurnal')?>">
+				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->
+				Neraca
+			</a>
+		</li>
+		<li id="rugilaba">
+			<a href="<?php echo site_url('dashboard/jurnal')?>">
+				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->
+				Laporan Rugi Laba
+			</a>
+		</li>
 		<hr/>
 		<li id="barang" class="">
 			<a href="<?php echo site_url('dashboard/barang')?>">

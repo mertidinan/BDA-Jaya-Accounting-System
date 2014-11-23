@@ -32,4 +32,10 @@ class m_pengeluaran extends CI_Model{
 		$query = $this->db->query($sql,$params);
 		if($query->num_rows()>0){return $query-> result_array();}else{return array();}
 	}
+
+	//semua kategori pemasukan
+	public function show_all_kategori_keluar(){
+		$query = $this->db->get('kategori_pengeluaran');
+		return $query->result_array();
+	}
 }

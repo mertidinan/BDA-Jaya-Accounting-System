@@ -83,19 +83,14 @@
 							function sort_array_by_value($key, &$array) {
 							    $sorter = array();
 							    $ret = array();
-
 							    reset($array);
-
 							    foreach($array as $ii => $value) {
 							        $sorter[$ii] = $value[$key];
 							    }
-
 							    asort($sorter);
-
-							    foreach($sorter as $ii => $value) {
+								foreach($sorter as $ii => $value) {
 							        $ret[$ii] = $array[$ii];
 							    }
-
 							    $array = $ret;
 							}
 							sort_array_by_value('tanggal',$jurnalmerge);
@@ -189,7 +184,8 @@
 								$tgl = 30;
 							} 
 							?>
-							<?php if($total_gaji != 0){?>
+							<?php if($total_gaji != 0){
+								$totalgaji = $total_gaji * 30000;?>
 							<tr>
 								<td><?php echo $tgl?></td>
 								<td>Pemberian gaji karyawan<br/><span style="padding-left:2em">Kas</span></td>
@@ -202,8 +198,8 @@
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><strong>Rp <?php echo $this->cart->format_number($totaldebit);?> </strong></td>
-								<td><strong>Rp <?php echo $this->cart->format_number($totalkredit);?> </strong></td>
+								<td><strong>Rp <?php echo $this->cart->format_number($totaldebit + $totalgaji);?> </strong></td>
+								<td><strong>Rp <?php echo $this->cart->format_number($totalkredit + $totalgaji);?> </strong></td>
 							</tr>
 						</table>
 						</div>
