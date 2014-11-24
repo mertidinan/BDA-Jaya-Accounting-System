@@ -29,11 +29,11 @@
 				<div class="panel-body">
 					<!-- menu -->
 					<div class="col-md-6">
-						<!-- <strong>Buku Kas per : <?php echo $bulan.'/'.$tahun;?></strong> -->
-						<a title="menampilkan buku kas untuk bulan ini" href="<?php echo site_url('dashboard/jurnal')?>" class="btn btn-primary btn-sm">Hari Ini</a>
+						<!-- <h4><strong>Buku Kas per : <?php echo $bulan.'/'.$tahun;?></strong></h4> -->
+						<a title="menampilkan buku kas untuk bulan ini" href="<?php echo site_url('dashboard/buku_besar')?>" class="btn btn-primary btn-sm">Hari Ini</a>
 					</div>
 					<div class="col-md-6">
-						<span><form style="float:right" class="form-inline" action="<?php echo site_url('dashboard/jurnal?act=sort')?>" method="get">
+						<span><form style="float:right" class="form-inline" action="<?php echo site_url('dashboard/buku_besar?act=sort')?>" method="get">
 
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
@@ -86,7 +86,7 @@
 							}
 							sort_array_by_value('tanggal',$jurnalmerge);
 							?>
-							<strong>Akun : Kas</strong>
+							<h4><strong>Akun : Kas</strong></h4><br/>
 							<table class="table table-striped">
 							<tr>
 								<th>Tanggal</th>
@@ -97,15 +97,47 @@
 								<th>D/K</th>
 								<th>Saldo (Rp)</th>
 							</tr>
-							<?php $saldo = 0;foreach($jurnalmerge as $jurnal):?>
+							<?php $saldo = 0;$debitkas=0;$kreditkas=0;foreach($jurnalmerge as $jurnal):?>
 								<tr>
 									<td><?php echo date('d',strtotime($jurnal['tanggal']))?></td>
 									<td><?php echo $jurnal['keterangan']?></td>
 									<td></td>
-									<td><?php if($jurnal['det']=='masuk'){echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo+$jurnal['rp'];}?></td>
-									<td><?php if($jurnal['det']=='keluar'){echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo-$jurnal['rp'];}?></td>
-									<td>D</td>
-									<td><?php echo number_format($saldo);?></td>
+									<td>
+									<?php if($jurnal['det']=='masuk'){
+										if($jurnal['status']=='piutang') {
+											//cek yang sudah terbayarkan
+											$this->db->where('id_transaksi',$jurnal['id_transaksi']);//cek transaksi sesuai dengan id trannsksi
+											$transaksi = $this->db->get('transaksi');
+											$transaksi = $transaksi->row_array();
+											$totalterbayarkan = $transaksi['bayar'];
+											echo number_format($totalterbayarkan);//lihat total piutang yang telah terbayarkan
+											$saldo = $saldo + $totalterbayarkan;
+											$debitkas = $debitkas+$totalterbayarkan;
+										} else {
+											echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo+$jurnal['rp'];
+											$debitkas = $debitkas+$jurnal['rp'];
+										}
+									}?>
+									</td>
+									<td>
+									<?php if($jurnal['det']=='keluar'){
+										if($jurnal['status']=='hutang'){
+											$this->db->where('id_pasokan',$jurnal['id_pasokan']);//cek id pasokan
+											$pasokan = $this->db->get('pasokan');
+											$pasokan = $pasokan->row_array();
+											$totalterbayarkan = $pasokan['rp_bayar'];
+											echo number_format($totalterbayarkan);
+											$saldo = $saldo - $totalterbayarkan;
+											$kreditkas = $kreditkas + $totalterbayarkan;
+										} else {
+											echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo-$jurnal['rp'];
+											$kreditkas = $kreditkas + $jurnal['rp'];
+										}										
+									}?>
+									</td>
+									<td></td>
+									<td><?php $total_kas = $saldo;echo number_format($total_kas);
+									?></td>
 								</tr>
 							<?php endforeach;?>
 							<?php
@@ -129,14 +161,272 @@
 								<td></td>
 								<td></td>
 								<td><?php echo $this->cart->format_number($totalgaji);?></td>
-								<td>D</td>
-								<td><?php echo number_format($saldo-$totalgaji)?></td>
+								<td></td>
+								<td><?php $kreditkas = $kreditkas + $total_gaji;$total_kas = $total_gaji;echo number_format($saldo-$totalgaji)?></td>
 							</tr>
 							<?php }?>
+							<?php
+							//untuk data neraca 
+							//cek lebih besar debit atau kredit
+							if($kreditkas > $debitkas){
+								$neraca=array('tipe'=>'kas','value'=>$kreditkas,'pos'=>'debit');
+								$data['neraca'][] = $neraca;
+								//echo 'kredit'.$kreditkas.' | ';
+							} else {
+								$neraca=array('tipe'=>'kas','value'=>$debitkas,'pos'=>'kredit');
+								$data['neraca'][] = $neraca;
+								//echo 'debit'.$debitkas;
+							}
+							?>
 							</table>
+							<hr/>
+							<!-- perulangan untuk semua kategori keluar dan masuk -->
+							<!-- semua kategori masuk -->
+							<?php foreach($all_kategori_masuk as $katmasuk):?>
+								<?php if($katmasuk['id_kat_masuk']  == '2') {
+									$params = array($katmasuk['id_kat_masuk'],$bulan,$tahun);
+									$akun = $this->m_pemasukan->show_masuk_bukubesar($params);
+									foreach($akun as $a):
+										if($a['status']=='lunas') { //menyimpan semua yang lunas
+											$pendapatan = array($a);
+										} else if ($a['status']=='piutang') { //menyimpan semua yang masih piuntag
+											$piutang = array($a);
+										}
+									endforeach;
+							?>
+								<!-- menampilkan pendapatan -->
+								<h4><strong>Pendapatan</strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php $totalpendapatan = 0;foreach($pendapatan as $dapat):?>
+									<tr>
+										<td><?php echo date('d',strtotime($dapat['tanggal']))?></td>
+										<td><?php echo $dapat['keterangan'];?></td>
+										<td></td>
+										<td><?php echo number_format($dapat['rp']);$totalpendapatan = $totalpendapatan + $dapat['rp'];?></td>
+										<td></td>
+										<td></td>
+										<td><?php echo number_format($totalpendapatan)?></td>
+									</tr>
+								<?php endforeach;
+								$neraca=array('tipe'=>'pendapatan','value'=>$totalpendapatan,'pos'=>'debit');
+								array_push($data['neraca'], $neraca);
+								?>
+								</table>
+								<!-- menampilkan piutang -->
+								<h4><strong>Piutang</strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php foreach($piutang as $piut):
+								//cek yang sudah dibayarkan
+								$totalpiutang = 0;
+								$this->db->where('id_transaksi',$piut['id_transaksi']);//cek transaksi sesuai dengan id trannsksi
+								$transaksi = $this->db->get('transaksi');
+								$transaksi = $transaksi->row_array();
+								$piutang = $transaksi['total_bayar'] + $transaksi['bayar'];
+								?>
+									<tr>
+										<td><?php echo date('d',strtotime($piut['tanggal']))?></td>
+										<td><?php echo $piut['keterangan'];?></td>
+										<td></td>
+										<td><?php echo number_format($piutang);$totalpiutang = $totalpiutang + $piutang; ?></td>
+										<td></td>
+										<td></td>
+										<td><?php echo number_format($totalpiutang);?></td>
+									</tr>
+								<?php endforeach;
+								$neraca=array('tipe'=>'piutang','value'=>$debitkas,'pos'=>'debit');
+								array_push($data['neraca'], $neraca);
+								?>
+								</table>
+							<?php									
+								} /*end of jika kategori = penjualan barang*/ else {
+							?>									
+								<h4><strong><?php echo $katmasuk['det_kat_masuk']?></strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php 
+								$params = array($katmasuk['id_kat_masuk'],$bulan,$tahun);
+								$akun = $this->m_pemasukan->show_masuk_bukubesar($params);								
+								foreach($akun as $a):
+								$total = array($a['kategori']=>'');
+								?>
+								<tr>
+									<td><?php echo date('d',strtotime($a['tanggal']))?></td>
+									<td><?php echo $a['keterangan']?></td>
+									<td></td>
+									<td></td>
+									<td><?php echo number_format($a['rp']);$total[$a['kategori']] = $total[$a['kategori']] + $a['rp'];?></td>
+									<td></td>
+									<td><?php echo number_format($total[$a['kategori']]);?></td>
+								</tr>
+								<?php
+								$this->db->where('id_kat_masuk',$a['kategori']);
+								$query = $this->db->get('kategori_pemasukan');//select ke table pemasukan
+								$query = $query->row_array();
+								endforeach;
+								$neraca=array('tipe'=>$query['det_kat_masuk'],'value'=>$total[$a['kategori']],'pos'=>'kredit');
+								array_push($data['neraca'], $neraca);
+								?>
+								</table>
+								<hr/>	
+							<?php } ?>
+							<?php endforeach;
+
+							?>
+
+							<!-- semua kategori keluar -->
+							<?php foreach($all_kategori_keluar as $katkeluar):
+							//jika kategori keluar adalah pembelian barang
+							if($katkeluar['id_kat_pengeluaran'] == 6){
+								$params = array($katkeluar['id_kat_pengeluaran'],$bulan,$tahun);
+								$akun = $this->m_pengeluaran->show_keluar_bukubesar($params);
+								foreach($akun as $a):
+									if($a['status']=='lunas') { //menyimpan semua yang lunas
+										$pembelian = array($a);
+									} else if ($a['status']=='hutang') { //menyimpan semua yang masih hutang
+										$hutang = array($a);
+									}
+								endforeach;
+							?>
+								<!-- menampilkan pembelian -->
+								<h4><strong>Pembelian</strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php $totalpembelian = 0;foreach($pembelian as $beli):?>
+								<tr>
+									<td><?php echo $beli['tanggal'];?></td>
+									<td><?php echo $beli['keterangan'];?></td>
+									<td></td>
+									<td><?php echo number_format($beli['rp']);$totalpembelian = $totalpembelian+$beli['rp'];?></td>
+									<td></td>
+									<td></td>
+									<td><?php echo number_format($totalpembelian);
+									$neraca=array('tipe'=>'pembelian','value'=>$totalpembelian,'pos'=>'debit');
+									array_push($data['neraca'], $neraca);
+									?></td>
+								</tr>
+								<?php endforeach;?>
+								</table>
+								<hr/>
+								<!-- menampilkan hutang -->
+								<h4><strong>Hutang Usaha</strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php $totalhutang=0; foreach($hutang as $hut):?>
+								<tr>
+									<td><?php echo $hut['tanggal'];?></td>
+									<td><?php echo 'Hutang : '.$hut['keterangan']?></td>
+									<td></td>
+									<td></td>
+									<td>
+										<?php //cek detail pasokan
+										$this->db->where('id_pasokan',$hut['id_pasokan']);
+										$pasokan = $this->db->get('pasokan');
+										$pasokan = $pasokan->row_array();
+										$hutang = $pasokan['rp'] + $pasokan['rp_bayar'];
+										echo number_format($hutang);
+										$totalhutang = $totalhutang+$hutang;
+										?>
+									</td>
+									<td></td>
+									<td><?php echo number_format($totalhutang);
+									$neraca=array('tipe'=>'hutang','value'=>$totalhutang,'pos'=>'kredit');
+									array_push($data['neraca'], $neraca);
+									?></td>
+								</tr>
+								<?php endforeach;?>
+								</table>
+								<hr/>
+							<?php
+							} else {  //end of if kategori pengeluaran = pembelian barang?>
+								<h4><strong><?php echo $katkeluar['det_kat_pengeluaran']?></strong></h4><br/>
+								<table class="table table-striped">
+								<tr>
+									<th>Tanggal</th>
+									<th>Keterangan</th>
+									<th>Ref</th>
+									<th>Debet (Rp)</th>
+									<th>Kredit (Rp)</th>
+									<th>D/K</th>
+									<th>Saldo (Rp)</th>
+								</tr>
+								<?php
+								$params = array($katkeluar['id_kat_pengeluaran'],$bulan,$tahun);
+								$akun = $this->m_pengeluaran->show_keluar_bukubesar($params);
+								foreach($akun as $a):	
+								$totalkeluar[$a['kategori']] = 0;								
+								?>
+								<tr>
+									<td><?php echo date('d',strtotime($a['tanggal']))?></td>
+									<td><?php echo $a['keterangan'];?></td>
+									<td></td>
+									<td><?php echo number_format($a['rp']);$totalkeluar[$a['kategori']] = $totalkeluar[$a['kategori']] + $a['rp'];?></td>
+									<td></td>
+									<td></td>
+									<td><?php echo number_format($totalkeluar[$a['kategori']])?></td>
+								</tr>
+								<?php	
+								$this->db->where('id_kat_pengeluaran',$a['kategori']);
+								$query = $this->db->get('kategori_pengeluaran');
+								$query = $query->row_array();
+								$neraca=array('tipe'=>$query['det_kat_pengeluaran'],'value'=>$totalkeluar[$a['kategori']],'pos'=>'debit');
+								array_push($data['neraca'], $neraca);
+								endforeach;								
+								?>
+								</table>
+								<hr/>	
+							<?php
+							} //end of else kategori pengeluaran
+							?>								
+							<?php endforeach; ?>
 							</div>
 						</div>
+						<pre>
+						<?php print_r($data);?>
+						</pre>
 						<div class="col-md-12">
+							<center><a href="<?php echo site_url('dashboard/neraca')?>" class="btn btn-primary btn-lg">Neraca Saldo</a></center>
 							<br/><br/>
 							<hr/>
 						</div>				

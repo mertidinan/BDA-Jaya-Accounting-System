@@ -29,4 +29,14 @@ class m_pemasukan extends CI_Model{
 		$query = $this->db->get('kategori_pemasukan');
 		return $query->result_array();
 	}
+	//menampilkan pemasukan berdasarkan kategori, bulan dan tahun : untuk buku besar
+	public function show_masuk_bukubesar($params){ //kat | bln |tahun
+		$sql = 'SELECT * FROM pemasukan WHERE kategori = ? AND MONTH(tanggal) = ? AND YEAR(tanggal) = ?';
+		$query = $this->db->query($sql,$params);
+		if($query->num_rows<0){
+			return array();
+		} else {
+			return $query->result_array();
+		}
+	}
 }

@@ -30,12 +30,6 @@
 				Buku Besar
 			</a>
 		</li>
-		<li id="neraca">
-			<a href="<?php echo site_url('dashboard/jurnal')?>">
-				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->
-				Neraca
-			</a>
-		</li>
 		<li id="rugilaba">
 			<a href="<?php echo site_url('dashboard/jurnal')?>">
 				<!-- <span class="badge pull-right"><?php echo $this->db->count_all('transaksi');?></span> -->

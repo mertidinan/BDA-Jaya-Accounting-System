@@ -33,9 +33,20 @@ class m_pengeluaran extends CI_Model{
 		if($query->num_rows()>0){return $query-> result_array();}else{return array();}
 	}
 
-	//semua kategori pemasukan
+	//semua kategori pengeluaran
 	public function show_all_kategori_keluar(){
 		$query = $this->db->get('kategori_pengeluaran');
 		return $query->result_array();
+	}
+
+	//menampilkan pengeluaran berdasarkan kategori, bulan dan tahun : untuk buku besar
+	public function show_keluar_bukubesar($params){ //kat | bln |tahun
+		$sql = 'SELECT * FROM pengeluaran WHERE kategori = ? AND MONTH(tanggal) = ? AND YEAR(tanggal) = ?';
+		$query = $this->db->query($sql,$params);
+		if($query->num_rows<0){
+			return array();
+		} else {
+			return $query->result_array();
+		}
 	}
 }

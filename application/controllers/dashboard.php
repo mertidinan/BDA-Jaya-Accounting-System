@@ -345,4 +345,11 @@ class dashboard extends base {
 		$data['all_kategori_masuk'] = $this->m_pemasukan->show_all_kategori_masuk();
 		$this->baseView('admin/bukubesar',$data);
 	}
+
+	//cek neraca
+	public function neraca(){
+		$data['title'] = 'Neraca';;
+		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('neraca').className = 'active';});</script>";
+		$this->baseView('admin/neraca',$data);
+	}
 }

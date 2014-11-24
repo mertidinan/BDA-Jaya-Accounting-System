@@ -190,8 +190,8 @@
 								<td><?php echo $tgl?></td>
 								<td>Pemberian gaji karyawan<br/><span style="padding-left:2em">Kas</span></td>
 								<td></td>
-								<td><?php echo $this->cart->format_number($total_gaji * 30000);?></td>
-								<td><?php echo '<br/>'.$this->cart->format_number($total_gaji * 30000);?></td>
+								<td><?php echo 'Rp '.$this->cart->format_number($total_gaji * 30000);?></td>
+								<td><?php echo '<br/>Rp '.$this->cart->format_number($total_gaji * 30000);?></td>
 							</tr>
 							<?php } ?>
 							<tr>
