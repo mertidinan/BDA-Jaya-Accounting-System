@@ -169,11 +169,11 @@
 							//untuk data neraca 
 							//cek lebih besar debit atau kredit
 							if($kreditkas > $debitkas){
-								$neraca=array('tipe'=>'kas','value'=>$kreditkas,'pos'=>'debit');
+								$neraca=array('tipe'=>'kas','value'=>$kreditkas,'pos'=>'kredit');
 								$data['neraca'][] = $neraca;
 								//echo 'kredit'.$kreditkas.' | ';
 							} else {
-								$neraca=array('tipe'=>'kas','value'=>$debitkas,'pos'=>'kredit');
+								$neraca=array('tipe'=>'kas','value'=>$debitkas,'pos'=>'debit');
 								$data['neraca'][] = $neraca;
 								//echo 'debit'.$debitkas;
 							}
@@ -251,7 +251,7 @@
 										<td><?php echo number_format($totalpiutang);?></td>
 									</tr>
 								<?php endforeach;
-								$neraca=array('tipe'=>'piutang','value'=>$debitkas,'pos'=>'debit');
+								$neraca=array('tipe'=>'piutang','value'=>$totalpiutang,'pos'=>'debit');
 								array_push($data['neraca'], $neraca);
 								?>
 								</table>
