@@ -272,24 +272,24 @@
 								<?php 
 								$params = array($katmasuk['id_kat_masuk'],$bulan,$tahun);
 								$akun = $this->m_pemasukan->show_masuk_bukubesar($params);								
+								$total = 0;
 								foreach($akun as $a):
-								$total = array($a['kategori']=>'');
 								?>
 								<tr>
 									<td><?php echo date('d',strtotime($a['tanggal']))?></td>
 									<td><?php echo $a['keterangan']?></td>
 									<td></td>
 									<td></td>
-									<td><?php echo number_format($a['rp']);$total[$a['kategori']] = $total[$a['kategori']] + $a['rp'];?></td>
+									<td><?php echo number_format($a['rp']);$total = $total + $a['rp'];?></td>
 									<td></td>
-									<td><?php echo number_format($total[$a['kategori']]);?></td>
+									<td><?php echo number_format($total);?></td>
 								</tr>
 								<?php
 								$this->db->where('id_kat_masuk',$a['kategori']);
 								$query = $this->db->get('kategori_pemasukan');//select ke table pemasukan
 								$query = $query->row_array();
 								endforeach;
-								$neraca=array('tipe'=>$query['det_kat_masuk'],'value'=>$total[$a['kategori']],'pos'=>'kredit');
+								$neraca=array('tipe'=>$query['det_kat_masuk'],'value'=>$total,'pos'=>'kredit');
 								array_push($data['neraca'], $neraca);
 								?>
 								</table>
@@ -422,9 +422,10 @@
 							<?php endforeach; ?>
 							</div>
 						</div>
-						<pre>
+						<!-- <pre>
 						<?php print_r($data);?>
-						</pre>
+						</pre> -->
+						<?php $this->session->set_userdata($data);?>
 						<div class="col-md-12">
 							<center><a href="<?php echo site_url('dashboard/neraca')?>" class="btn btn-primary btn-lg">Neraca Saldo</a></center>
 							<br/><br/>

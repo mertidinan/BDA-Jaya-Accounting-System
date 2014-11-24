@@ -28,13 +28,42 @@
 				</div>
 				<div class="panel-body">
 				<h4>Neraca</h4>
-				<?php print_r($this->session->userdata); ?>
+				<!-- <pre>
+				<?php print_r($this->session->userdata('neraca')); ?>
+				</pre> -->
 				<table class="table table-striped">
 					<tr>
-						<th>No Akun</th>
+						
 						<th>Nama Akun</th>
 						<th>Debet</th>
 						<th>Kredit</th>
+					</tr>
+					<?php $totaldebet=0;$totalkredit=0;
+					foreach($this->session->userdata('neraca') as $n):?>
+						<tr>						
+							<td><?php echo $n['tipe'];?></td>
+							<td>
+							<?php
+							if($n['pos'] == 'debit'){
+								echo number_format($n['value']);
+								$totaldebet = $totaldebet + $n['value'];
+							}
+							?>
+							</td>
+							<td>
+							<?php
+							if($n['pos'] == 'kredit'){
+								echo number_format($n['value']);
+								$totalkredit = $totalkredit + $n['value'];
+							}
+							?>
+							</td>
+						</tr>
+					<?php endforeach;?>
+					<tr>
+						<td></td>
+						<td><strong><?php echo number_format($totaldebet);?></strong></td>
+						<td><strong><?php echo number_format($totalkredit);?></strong></td>
 					</tr>
 				</table>
 				</div>
