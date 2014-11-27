@@ -20,6 +20,7 @@
 </div>
 <div class="container">
 	<?php $this->load->view('admin/menu')?>
+	<?php //print_r($this->session->userdata('neraca'));?>
 	<div class="col-md-10">
 		<div class="col-md-12">
 			<div class="panel panel-default">
