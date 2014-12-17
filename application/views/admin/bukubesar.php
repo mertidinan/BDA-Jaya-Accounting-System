@@ -114,7 +114,7 @@
 											$saldo = $saldo + $totalterbayarkan;
 											$debitkas = $debitkas+$totalterbayarkan;
 										} else {
-											echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo+$jurnal['rp'];
+											echo number_format($jurnal['rp']);$saldo=$saldo+$jurnal['rp'];
 											$debitkas = $debitkas + $jurnal['rp'];
 										}
 									}?>
@@ -130,7 +130,7 @@
 											$saldo = $saldo - $totalterbayarkan;
 											$kreditkas = $kreditkas + $totalterbayarkan;
 										} else {
-											echo $this->cart->format_number($jurnal['rp']);$saldo=$saldo-$jurnal['rp'];
+											echo number_format($jurnal['rp']);$saldo=$saldo-$jurnal['rp'];
 											$kreditkas = $kreditkas + $jurnal['rp'];
 										}										
 									}?>
@@ -160,7 +160,7 @@
 								<td><?php echo 'Pemberian gaji';?></td>
 								<td></td>
 								<td></td>
-								<td><?php echo $this->cart->format_number($totalgaji);?></td>
+								<td><?php echo number_format($totalgaji);?></td>
 								<td></td>
 								<td><?php $kreditkas = $kreditkas + $total_gaji;$total_kas = $total_gaji;$neraca_kas = $saldo-$totalgaji;echo number_format($neraca_kas);?></td>
 							</tr>
@@ -487,7 +487,7 @@
 						</pre> -->
 						<?php $this->session->set_userdata($data);?>
 						<div class="col-md-12">
-							<center><a href="<?php echo site_url('dashboard/neraca')?>" class="btn btn-primary btn-lg">Neraca Saldo</a></center>
+							<center><a href="<?php echo site_url('dashboard/neraca?bln='.$bulan.'&thn='.$tahun)?>" class="btn btn-primary btn-lg">Neraca Saldo</a></center>
 							<br/><br/>
 							<hr/>
 						</div>				

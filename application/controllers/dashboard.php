@@ -348,8 +348,27 @@ class dashboard extends base {
 
 	//cek neraca
 	public function neraca(){
+		$data['bulan'] = $this->input->get('bln');
+		$data['tahun'] = $this->input->get('thn');
 		$data['title'] = 'Neraca';;
 		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('neraca').className = 'active';});</script>";
 		$this->baseView('admin/neraca',$data);
 	}
+
+	//lapora raba rugi
+	public function raba_rugi(){
+		$data['bulan'] = $this->input->get('bln');
+		$data['tahun'] = $this->input->get('thn');
+		$data['title'] = 'Laporan Data Rugi | ';
+		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('neraca').className = 'active';});</script>";
+		$this->baseView('admin/raba_rugi',$data);	
+	}
+
+	//laporan perubahan modal
+	public function perubahan_modal(){
+		$data['title'] = 'Laporan Perubahan Modal | ';
+		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('neraca').className = 'active';});</script>";
+		$this->baseView('admin/perubahan_modal',$data);
+	}
 }
+

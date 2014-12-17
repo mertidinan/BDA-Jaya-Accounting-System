@@ -172,7 +172,7 @@ class ajax extends base {
 		//lihat detail pasokan
 		public function detail_pasokan(){
 			$idPasokan = $this->input->get('id');//id pasokan
-			$sql = "SELECT barang.nama as 'barang', jumlah, pasokan_item.harga_beli AS 'harga_beli', subtotal_beli
+			$sql = "SELECT barang.no_seri as 'no_seri',barang.nama as 'barang', jumlah, pasokan_item.harga_beli AS 'harga_beli', subtotal_beli
 			FROM pasokan_item 
 			INNER JOIN barang ON barang.id_barang = pasokan_item.id_barang
 			WHERE id_pasokan = ?";
@@ -181,6 +181,7 @@ class ajax extends base {
 			foreach($pasokan_item as $p):
 			echo '<table class="table table-striped">';
 			echo '<tr>';
+			echo '<td>'.$p['no_seri'].'</td>';
 			echo '<td>'.$p['barang'].'</td>';
 			echo '<td>'.$p['jumlah'].',</td>';
 			echo '<td>Rp'.$p['harga_beli'].',-/unit</td>';

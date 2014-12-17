@@ -129,19 +129,19 @@
 													$this->db->where('id_transaksi',$jurnal['id_transaksi']);
 													$transaksi = $this->db->get('transaksi');
 													$transaksi = $transaksi->row_array();
-													echo 'Rp '.$this->cart->format_number($transaksi['bayar']).',-<br/>';
-													echo 'Rp '.$this->cart->format_number($jurnal['rp']-$transaksi['bayar']).',-<br/>';
+													echo ''.number_format($transaksi['bayar']).'<br/>';
+													echo ''.number_format($jurnal['rp']-$transaksi['bayar']).'<br/>';
 												} else { //sudah lunas
-													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+													echo ''.number_format($jurnal['rp']).'';
 												}
 											} else if($jurnal['det']=='keluar'){ //keluar
 												if($jurnal['status']=='hutang'){//jika masih hutang													
-													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+													echo ''.number_format($jurnal['rp']).'';
 												} else { //hutang sudah lunas
-													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+													echo ''.number_format($jurnal['rp']).'';
 												}
 											} else {
-												echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';
+												echo ''.number_format($jurnal['rp']).'';
 											}																					
 											$totaldebit = $totaldebit + $jurnal['rp']; ?>
 									</td>
@@ -150,22 +150,22 @@
 											if($jurnal['det']=='masuk') {
 												if($jurnal['status']=='piutang'){ //jika masih piutang
 													echo '<br/><br/>';
-													echo 'Rp '.$this->cart->format_number($jurnal['rp']).',-';	
+													echo ''.number_format($jurnal['rp']).'';	
 												} else { //sudah lunas
-													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';
+													echo '<br/>'.number_format($jurnal['rp']).'';
 												}
 											} else if($jurnal['det']=='keluar'){ //keluar
 												if($jurnal['status']=='hutang'){//jika masih hutang
 													$this->db->where('id_pasokan',$jurnal['id_pasokan']);
 													$pasokan = $this->db->get('pasokan');
 													$pasokan = $pasokan->row_array();
-													echo '<br/>Rp '.$this->cart->format_number($pasokan['rp_bayar']).',-';
-													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp'] - $pasokan['rp_bayar']).',-';
+													echo '<br/>'.number_format($pasokan['rp_bayar']).'';
+													echo '<br/>'.number_format($jurnal['rp'] - $pasokan['rp_bayar']).'';
 												} else { //hutang sudah lunas
-													echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';		
+													echo '<br/>'.number_format($jurnal['rp']).'';		
 												}
 											} else {
-												echo '<br/>Rp '.$this->cart->format_number($jurnal['rp']).',-';		
+												echo '<br/>'.number_format($jurnal['rp']).'';		
 											}															
 											$totalkredit = $totalkredit + $jurnal['rp'];?>
 									</td>
@@ -190,16 +190,16 @@
 								<td><?php echo $tgl?></td>
 								<td>Pemberian gaji karyawan<br/><span style="padding-left:2em">Kas</span></td>
 								<td></td>
-								<td><?php echo 'Rp '.$this->cart->format_number($total_gaji * 30000);?></td>
-								<td><?php echo '<br/>Rp '.$this->cart->format_number($total_gaji * 30000);?></td>
+								<td><?php echo ''.number_format($total_gaji * 30000).'';?></td>
+								<td><?php echo '<br/>'.number_format($total_gaji * 30000).'';?></td>
 							</tr>
 							<?php } ?>
 							<tr>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td><strong>Rp <?php echo $this->cart->format_number($totaldebit + $totalgaji);?> </strong></td>
-								<td><strong>Rp <?php echo $this->cart->format_number($totalkredit + $totalgaji);?> </strong></td>
+								<td><strong><?php echo number_format($totaldebit + $totalgaji).'';?> </strong></td>
+								<td><strong><?php echo number_format($totalkredit + $totalgaji).'';?> </strong></td>
 							</tr>
 						</table>
 						</div>

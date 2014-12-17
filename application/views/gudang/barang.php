@@ -58,8 +58,8 @@
 				<div class="panel-body">
 					<!-- menu -->
 					<div class="col-md-6">
-						<!-- <a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Barang Baru</a>
-						<a onclick="tambahStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Tambah Stok</a>
+						<a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Barang Baru</a>
+						<!-- <a onclick="tambahStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Tambah Stok</a>
 						<a onclick="kurangiStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Kurangi Stok</a>
 						<!-- <a onclick="closeAll()" href="#" class="btn btn-default btn-xs" href="">x</a> -->
 						<!-- modal tambah barang -->
@@ -101,19 +101,19 @@
 											</select>
 										</div>
 									</div>
-									<div class="form-group">
+									<div style="display:none" class="form-group">
 										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
 										<div class="col-lg-4">
-											<input name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+											<input name="inputHargaBeli" type="number" value="0" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
 										</div>
 									</div>
-									<div class="form-group">
+									<div style="display:none" class="form-group">
 										<label for="inputStok" class="col-lg-2 control-label"><small>Stok</small></label>
 										<div class="col-lg-4">
-											<input name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+											<input name="inputStok" value="0" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
 										</div>
 									</div>
-									<div class="form-group">
+									<div style="display:none" class="form-group">
 										<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
 										<div class="col-lg-4">
 											<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														

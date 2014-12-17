@@ -88,7 +88,7 @@ class gudang extends base {
 		$stok = $post['inputStok'];
 		$hargajual = $hargabeli+($hargabeli*0.01);//set harga jual
 		$status = $post['statusTransaksi'];
-		$pemasok = $post['inputPemasok'];
+		$pemasok = null;
 		//cek apakah nomor seri sudah ada
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('inputSeri','Nomor Seri','is_unique[barang.no_seri]');//no seri adalah unik
