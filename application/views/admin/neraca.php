@@ -115,7 +115,7 @@
 		</table>
 	</div>
 	<div class="col-md-12">
-		<center><a href="<?php echo site_url('dashboard/raba_rugi?bln='.$bulan.'&thn='.$tahun)?>" class="btn btn-primary btn-lg">Laporan Raba Rugi / Perubahan Modal</a> <a href="<?php echo site_url('dashboard/neraca')?>" class="btn btn-primary btn-lg">Laporan Perubahan Modal</a></center>
+		<center><a href="<?php echo site_url('dashboard/raba_rugi?bln='.$bulan.'&thn='.$tahun)?>" class="btn btn-primary btn-lg">Laporan Raba Rugi / Perubahan Modal</a></center>
 		<br/><br/>
 		<hr/>
 	</div>

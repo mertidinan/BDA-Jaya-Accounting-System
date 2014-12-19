@@ -28,7 +28,7 @@ class m_barang extends CI_Model{
 		barang.tanggal AS 'tanggal',barang.harga_jual AS 'harga_jual',barang.harga_beli AS 'harga_beli',
 		barang.stok AS 'stok',kategori_barang.des_kat_barang AS 'kategori'
 		FROM barang INNER JOIN kategori_barang 
-		ON barang.kategori = kategori_barang.id_kat_barang WHERE barang.no_seri = '".$keyword."' LIMIT ".$offset.",".$limit;
+		ON barang.kategori = kategori_barang.id_kat_barang WHERE barang.no_seri = '".$keyword."' OR barang.nama LIKE '%".$keyword."%' LIMIT ".$offset.",".$limit;
 		$query = $this->db->query($sql);
 		if($query->num_rows()>0){
 			return $query->result_array();
