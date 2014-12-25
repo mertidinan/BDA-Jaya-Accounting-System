@@ -21,6 +21,11 @@
 				Tambah Pengeluaran
 			</a>
 		</li>
+			<li id="pelanggan" class="">
+			<a href="<?php echo site_url('kasir/pelanggan')?>">
+				Pelanggan
+			</a>
+		</li>
 		<!-- <li id="piutang" class="">
 			<a href="<?php echo site_url('kasir/piutang')?>">
 				<span class="badge pull-right"><?php $this->db->where('status','piutang');echo $this->db->count_all('transaksi');?></span>

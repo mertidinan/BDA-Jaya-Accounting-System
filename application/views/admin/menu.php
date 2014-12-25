@@ -63,6 +63,13 @@
 			</a>
 		</li>
 		<hr/>
+		<li id="pelanggan" class="">
+			<a href="<?php echo site_url('dashboard/pelanggan')?>">
+				<span class="badge pull-right"><?php echo $this->db->count_all('pelanggan');?></span>
+				Pelanggan
+			</a>
+		</li>
+		<hr/>
 		<li id="karyawan" class="">
 			<a href="<?php echo site_url('dashboard/karyawan')?>">
 				<span class="badge pull-right"><?php echo $this->db->count_all('pegawai');?></span>

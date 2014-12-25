@@ -12,8 +12,9 @@ class base extends CI_Controller {
 		$this->load->model('m_pemasukan');
 		$this->load->model('m_kasir');
 		$this->load->model('m_transaksi');
+		$this->load->model('m_pelanggan');
 		//hidden notice
-		error_reporting(0);
+		// error_reporting(0);
 	}
 
 	public function error_403(){//default 403 error

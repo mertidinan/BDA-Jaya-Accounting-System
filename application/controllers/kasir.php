@@ -205,4 +205,62 @@ class kasir extends base {
 		$data['kategorikeluar'] = $this->m_admin->show_all_kategoripengeluaran();
 		$this->baseView('kasir/tambahkeluar',$data);
 	}
+	//show all pelanggan
+	public function pelanggan(){
+		$data = array(
+			'title'=>'Daftar Pelanggan',
+			'pelanggan'=>$this->m_pelanggan->show_all_pelanggan(),
+			'script'=>"<script> $(document).ready(function(){ document.getElementById('pelanggan').className = 'active';});</script>",
+			);
+		$this->load->model('m_admin');
+		$this->baseView('kasir/daftarpelanggan',$data);
+	}
+	//tambah pelanggan
+	public function tambahpelanggan(){
+		$data = array(
+			'nama_lengkap'=>$_POST['input_nama'],
+			'alamat'=>$_POST['input_alamat'],
+			'kontak'=>$_POST['input_kontak'],
+			'tgl_daftar'=>date('Y-m-d h:i:s'),
+			);
+		if($this->db->insert('pelanggan',$data)){
+			redirect('kasir/pelanggan');
+		}else{
+			echo 'gagal memasukan data';
+		}
+	}
+	//hapus pelanggan
+	public function hapuspelanggan(){
+		$id=$_GET['id'];
+		$this->db->delete('pelanggan',array('id_pelanggan'=>$id));
+		redirect('kasir/pelanggan');
+	}
+	//edit pelanggan
+	public function editpelanggan(){
+		switch ($_GET['act']) {
+			case 'edit':
+			$id = $_GET['id'];
+			$data = array(
+				'title'=>'Daftar Pelanggan',
+				'pelanggan'=>$this->m_pelanggan->show_all_pelanggan(),
+				'editpelanggan'=>$this->m_pelanggan->show_pelanggan_by_id($id),
+				'script'=>"<script> $(document).ready(function(){ document.getElementById('pelanggan').className = 'active';});</script>",
+				);
+			$this->baseView('kasir/daftarpelanggan',$data);
+			break;
+			case 'procedit':
+			$this->db->where('id_pelanggan',$_POST['input_id']);
+			$data = array(
+				'nama_lengkap'=>$_POST['input_nama'],
+				'alamat'=>$_POST['input_alamat'],
+				'kontak'=>$_POST['input_kontak'],
+				);
+			$this->db->update('pelanggan',$data);
+			redirect('kasir/pelanggan');
+			break;
+			default:
+			echo 'get out hacker!';
+			break;
+		}
+	}
 }
