@@ -87,7 +87,7 @@
 						<form class="form" method="get" action="<?php echo site_url('kasir/transaksi')?>">
 							<div class="input-group">
 
-								<input type="text" name="q" class="form-control" placeholder="masukan id transaksi">
+								<input type="text" name="q" class="form-control" placeholder="masukan id transaksi atau nama pelanggan">
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 								</span>
@@ -101,6 +101,7 @@
 						<tr>
 							<th>#</th>
 							<th>id_transaksi</th>
+							<th>Nama</th>
 							<th>Tanggal</th>
 							<th>Total</th>
 							<th>Status</th>
@@ -113,6 +114,7 @@
 						<tr>
 							<td><?php echo $i;?></td>
 							<td><?php echo $t['id_transaksi']?></td>
+							<td><?php echo $t['nama_lengkap']?></td>
 							<td><?php echo $t['tgl_transaksi']?></td>
 							<td>Rp<?php echo $t['total_bayar']?>,-</td>
 							<td><?php echo $t['status']?></td>

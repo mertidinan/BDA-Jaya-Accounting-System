@@ -60,7 +60,7 @@ class kasir extends base {
 	}
 	//memproses transaksi
 	public function prosesTransaksi(){
-		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('transaksiBaru').className = 'active';});</script>";
+		$data['script'] = "<script>$(document).ready(function(){ document.getElementById('transaksiBaru').className = 'active';});</script>";
 		$data['title'] = "Transaksi Tersimpan";
 		// set status pembayaran
 		if(isset($_POST['btn_bayar'])) { //jika pelanggan bayar
@@ -73,6 +73,7 @@ class kasir extends base {
 		$dibayar = $this->input->post('inputBayar');
 		$kembali = $this->input->post('inputKembali');
 		$data= array(
+			'id_pelanggan'=>$_POST['inputIdPelanggan'],
 			'total_bayar'=>$totalBayar,
 			'status'=>$status,
 			'bayar'=>$dibayar,
@@ -262,5 +263,19 @@ class kasir extends base {
 			echo 'get out hacker!';
 			break;
 		}
+	}
+	// ajax cek transaksi
+	public function cek_pelanggan(){
+		$nama = $_GET['nama'];
+		$pelanggan = $this->m_pelanggan->search_pelanggan_by_name($nama);
+		echo '<table class=\'table\'>';
+		echo '<tr><td>id pelanggan</td><td>nama</td></tr>';
+		foreach($pelanggan as $p):
+			echo '<tr>';
+			echo '<td>'.$p['id_pelanggan'].'</td>';
+			echo '<td><a href="#" onclick="addPelanggan('.$p['id_pelanggan'].',\''.$p['nama_lengkap'].'\')">'.$p['nama_lengkap'].'</a></td>';
+			echo '</tr>';
+		endforeach;
+		echo '</table>';
 	}
 }

@@ -18,6 +18,32 @@
 			}
 		});
 	}
+	//check pelanggan
+	function checkPelanggan(){
+		$('#pilihannama').show();//show pilihan nama tag
+		nama = $('#txtpelanggan').val();//ambil nama pelanggan yang diinputkan
+		if(nama == ''){
+			$('#txtpelanggan').val() = '';
+		}else{
+			$.ajax({
+				type:'GET',
+				url:'<?php echo site_url("kasir/cek_pelanggan")?>',
+				data:{nama:nama},
+				success:function(response){
+					$('#pilihannama').html(response);
+				},
+				error:function(response){
+					alert('sistem bermasalah, silahkan refresh halaman');
+				}
+			});
+		}		
+	}
+	//add pelanggan to input
+	function addPelanggan(x,y){//x = id pelanggan y = nama pelanggan
+		$('#pilihannama').hide();//hide pilihan nama tag
+		$('#txtpelanggan').val(y);
+		$('#txtIdPelanggan').val(x);
+	}
 </script>
 <div class="container">
 	<div class="col-md-12">
@@ -85,6 +111,14 @@
 		</div>
 		<div class="col-md-6">
 			<form method="POST" action="<?php echo site_url('kasir/prosesTransaksi')?>" class="form-horizontal" role="form">
+				<div class="form-group">
+					<label for="inputKode" class="col-lg-3 control-label">Pelanggan :</label>
+					<div class="col-lg-8">
+						<input name="inputPelanggan" onkeyup="checkPelanggan()" id="txtpelanggan" type="text" class="form-control" placeholder="nama pelanggan" required>
+						<input type="hidden" name="inputIdPelanggan" id="txtIdPelanggan" type="number" class="form-control" required>
+						<div id="pilihannama"></div>
+					</div>
+				</div>
 				<div class="form-group">
 					<label for="inputKode" class="col-lg-3 control-label">Cash :</label>
 					<div class="col-lg-8">

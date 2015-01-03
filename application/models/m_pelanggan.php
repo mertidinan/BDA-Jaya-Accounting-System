@@ -20,4 +20,14 @@ class m_pelanggan extends CI_Model{
 			return array();
 		}
 	}
+	//search pelanggan by nama
+	public function search_pelanggan_by_name($nama){
+		$this->db->like('nama_lengkap',$nama);
+		$query = $this->db->get('pelanggan');
+		if($query->num_rows()>0){
+			return $query->result_array();
+		}else{
+			return array();
+		}
+	}
 }

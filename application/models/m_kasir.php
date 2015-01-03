@@ -12,19 +12,34 @@ class m_kasir extends CI_Model{
 	}
 	//lihat semua transaksi
 	public function showTransaksi($limit,$offset){
-		$query = $this->db->get('transaksi',$limit,$offset);
+		$sql = "SELECT transaksi.id_transaksi AS 'id_transaksi',transaksi.tgl_transaksi AS 'tgl_transaksi',transaksi.total_bayar AS 'total_bayar',
+		transaksi.bayar AS 'bayar',transaksi.kembali AS 'kembali', transaksi.status AS 'status', pelanggan.nama_lengkap AS 'nama_lengkap'
+		FROM transaksi
+		INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan
+		LIMIT ".$limit." OFFSET ".$offset;
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	//lihat transaksi berdasarkan status(limit,offset)
 	public function showTransaksiByStatus($limit,$offset,$status){
-		$this->db->where('status',$status);
-		$query = $this->db->get('transaksi',$limit,$offset);
+		$sql = "SELECT transaksi.id_transaksi AS 'id_transaksi',transaksi.tgl_transaksi AS 'tgl_transaksi',transaksi.total_bayar AS 'total_bayar',
+		transaksi.bayar AS 'bayar',transaksi.kembali AS 'kembali', transaksi.status AS 'status', pelanggan.nama_lengkap AS 'nama_lengkap'
+		FROM transaksi
+		INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan
+		WHERE transaksi.status = '".$status."'
+		LIMIT ".$limit." OFFSET ".$offset;
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	//lihat transaksi berdasarkan pencarian
 	public function showTransaksiByKeyword($limit,$offset,$keyword){
-		$this->db->where('id_transaksi',$keyword);
-		$query = $this->db->get('transaksi',$limit,$offset);
+		$sql = "SELECT transaksi.id_transaksi AS 'id_transaksi',transaksi.tgl_transaksi AS 'tgl_transaksi',transaksi.total_bayar AS 'total_bayar',
+		transaksi.bayar AS 'bayar',transaksi.kembali AS 'kembali', transaksi.status AS 'status', pelanggan.nama_lengkap AS 'nama_lengkap'
+		FROM transaksi
+		INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan
+		WHERE pelanggan.nama_lengkap LIKE '%".$keyword."%' OR transaksi.id_transaksi = '".$keyword."'
+		LIMIT ".$limit." OFFSET ".$offset;
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 	//lihat total transaksi hari ini

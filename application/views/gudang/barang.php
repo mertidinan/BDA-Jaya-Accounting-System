@@ -239,7 +239,7 @@
 					<div class="col-md-6">
 						<form method="get">
 							<div class="input-group">
-								<input name="q" type="text" class="form-control" placeholder="masukan barcode">
+								<input name="q" type="text" class="form-control" placeholder="pencarian barang">
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
 								</span>
