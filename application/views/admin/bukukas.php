@@ -25,7 +25,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Barang</h3>
+					<h3 class="panel-title">kategori Kas</h3>
 				</div>
 				<div class="panel-body">
 					<!-- menu -->

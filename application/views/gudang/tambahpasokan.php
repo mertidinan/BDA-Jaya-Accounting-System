@@ -28,7 +28,13 @@
 	</div>
 </div>
 <div class="container">
-	<?php $this->load->view('gudang/menu')?>
+	<?php 
+	if($this->session->userdata('gudang_logged_in')){
+		$this->load->view('gudang/menu');
+	}else if($this->session->userdata('admin_logged_in')){
+		$this->load->view('admin/menu');
+	}
+	?>
 	<div class="col-md-10">
 		<div class="col-md-12">
 			<form method="post" action="<?php echo site_url('gudang/tambah_pasokan')?>" class="form-horizontal" role="form">

@@ -3,7 +3,7 @@ require_once 'application/controllers/base/base.php';
 class gudang extends base {
 	public function __construct(){
 		parent::__construct();
-		$this->gudang_logged_in();
+		// $this->gudang_logged_in();
 	}
 
 	public function index(){
@@ -314,6 +314,7 @@ class gudang extends base {
 	//pasokan
 	public function pasokan(){
 		$data['title'] = 'pasokan';
+		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('pasokan').className = 'active';});</script>";
 		$data['pasokan'] = $this->m_gudang->semua_pasokan();
 		$this->baseView('gudang/pasokan',$data);
 	}

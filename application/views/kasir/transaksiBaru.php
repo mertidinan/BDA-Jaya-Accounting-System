@@ -6,6 +6,7 @@
 		$('#txtkembali').val(kembali);
 	}
 	function checkBarang(){//cek stok barang digudang
+		$('#resultbarang').show();//show
 		$('#resultbarang').html('<i>cek ketersediaan...</i>');
 		var kode = $('#inputKode').val();//kode barang yang dimasukan
 		//alert(kode);
@@ -13,10 +14,15 @@
 			type:'GET',
 			url:'<?php echo site_url("kasir/cekBarang?kode=")?>'+kode,
 			success:function(response){
-				$('#resultbarang').html('<p> Stok = '+response+'</p>');
-				$('#inputJumlah').max(response); //set max value on input jumlah [not working]
+				$('#resultbarang').html(response);
+				// $('#inputJumlah').max(); //set max value on input jumlah [not working]
 			}
 		});
+	}
+	//add barang
+	function addBarang(x){
+		$('#resultbarang').hide();//hide result barang
+		$('#inputKode').val(x);//new value
 	}
 	//check pelanggan
 	function checkPelanggan(){
@@ -24,6 +30,7 @@
 		nama = $('#txtpelanggan').val();//ambil nama pelanggan yang diinputkan
 		if(nama == ''){
 			$('#txtpelanggan').val() = '';
+			$('#pilihannama').hide();//show pilihan nama tag
 		}else{
 			$.ajax({
 				type:'GET',
@@ -54,17 +61,24 @@
 	</div>
 </div>
 <div class="container">
-	<?php $this->load->view('kasir/menu')?>
+	<?php 
+	if($this->session->userdata('kasir_logged_in')){
+		$this->load->view('kasir/menu');
+	}else if($this->session->userdata('admin_logged_in')){
+		$this->load->view('admin/menu');
+	}
+	?>
 	<div class="col-md-10">
 		<div class="col-md-12">
 			<form method="post" action="<?php echo site_url('kasir/transaksiBaru')?>" class="form-horizontal" role="form">
 				<div class="form-group">
 					<label for="inputKode" class="col-lg-2 control-label">Kode Barang :</label>
 					<div class="col-lg-5">
-						<input onkeyup="checkBarang()" name="inputKode" type="text" class="form-control" id="inputKode" placeholder="Kode barang" required>
+						<input name="inputKode" onkeyup="checkBarang()" type="text" class="form-control" id="inputKode" placeholder="masukan kode atau nama barang" required><span class="col-md-2"></span>
 					</div>
-					<span id="resultbarang"></span>
+					<button class="btn btn-default" onclick="checkBarang()">cari</button>
 				</div>
+				<div style="display:none;height:200px;overflow-y:auto" id="resultbarang" class="col-md-12"></div>
 				<div class="form-group">
 					<label for="inputJumlah" class="col-lg-2 control-label">Jumlah :</label>
 					<div class="col-lg-5">

@@ -3,7 +3,7 @@ require_once 'application/controllers/base/base.php';
 class kasir extends base {
 	public function __construct(){
 		parent::__construct();
-		$this->kasir_logged_in();
+		// $this->kasir_logged_in();
 		$this->load->library('cart');
 	}
 	//halaman pertama
@@ -49,14 +49,26 @@ class kasir extends base {
 	public function cekBarang(){
 		$kodebarang = $this->input->get('kode');
 		// echo $kodebarang;
-		$query = $this->db->get_where('barang',array('no_seri'=>$kodebarang));
+		$this->db->like('nama',$kodebarang);
+		// $this->db->or_where('id_barang',$kodebarang);
+		$query = $this->db->get('barang',5,0);
 		if($query->num_rows()>0){
-			$result= $query->row_array();
-			$response = $result['stok'].' | '.$result['nama'];
+			$result= $query->result_array();
+			echo '<table class="table">';
+			echo '<tr><td>Kode</td><td>Nama</td><td>Stok</td><td></td></tr>';
+			foreach($result as $r){
+				echo '<tr>';
+				echo '<td>'.$r['no_seri'].'</td>';
+				echo '<td>'.$r['nama'].'</td>';
+				echo '<td>'.$r['stok'].'</td>';
+				echo '<td><button class="btn-xs btn btn-primary" onclick="addBarang('.$r['no_seri'].')">+</button></td>';
+				echo '</tr>';
+			}
+			echo '</table>';
 		} else {
-			$response = 'Barang tidak ditemukan';
+			echo 'Barang tidak ditemukan';
+			
 		}
-		echo $response;
 	}
 	//memproses transaksi
 	public function prosesTransaksi(){

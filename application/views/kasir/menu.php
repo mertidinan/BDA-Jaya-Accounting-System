@@ -16,12 +16,7 @@
 				Transaksi
 			</a>
 		</li>
-		<li id="tambahkeluar" class="">
-			<a href="<?php echo site_url('kasir/tambahkeluar')?>">
-				Tambah Pengeluaran
-			</a>
-		</li>
-			<li id="pelanggan" class="">
+		<li id="pelanggan" class="">
 			<a href="<?php echo site_url('kasir/pelanggan')?>">
 				Pelanggan
 			</a>

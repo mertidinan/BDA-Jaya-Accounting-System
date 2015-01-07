@@ -24,7 +24,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Barang</h3>
+					<h3 class="panel-title">Buku Besar</h3>
 				</div>
 				<div class="panel-body">
 					<!-- menu -->
@@ -48,7 +48,7 @@
 									<option value="8">Agustus</option>
 									<option value="9">September</option>
 									<option value="10">Oktober</option>
-									<option value="11">Nopember</option>
+									<option value="11">November</option>
 									<option value="12">Desember</option>
 								</select>
 							</div>
