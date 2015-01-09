@@ -10,6 +10,9 @@
 	function addPemasukan(){
 		$('#addpemasukan').toggle('fast');
 	}
+	function changedate(x){
+		$('#selecttgl').val('00');
+	}
 </script>
 <div class="container">
 	<div class="col-md-12">
@@ -39,6 +42,7 @@
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
 								<select id="selecttgl" name="tgl" class="input-sm form-control">
+									<option value='00'>Pilih Tanggal</option>
 									<?php for($x=1;$x<=31;$x++){
 									if($x<10){
 										$x = '0'.$x;
@@ -51,15 +55,16 @@
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
 								<select id="selectbln" name="bln" class="input-sm form-control">
-									<option value="1">Januari</option>
-									<option value="2">Februari</option>
-									<option value="3">Maret</option>
-									<option value="4">April</option>
-									<option value="5">Mei</option>
-									<option value="6">Juni</option>
-									<option value="7">Juli</option>
-									<option value="8">Agustus</option>
-									<option value="9">September</option>
+									<option onclick="changedate(00)" value="00">Semua Bulan</option>
+									<option value="01">Januari</option>
+									<option value="02">Februari</option>
+									<option value="03">Maret</option>
+									<option value="04">April</option>
+									<option value="05">Mei</option>
+									<option value="06">Juni</option>
+									<option value="07">Juli</option>
+									<option value="08">Agustus</option>
+									<option value="09">September</option>
 									<option value="10">Oktober</option>
 									<option value="11">Nopember</option>
 									<option value="12">Desember</option>

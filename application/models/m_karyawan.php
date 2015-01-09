@@ -77,8 +77,13 @@ class m_karyawan extends CI_Model{
 
     //tentang penggajian
     public function total_gaji_bln_ini($params){
-        $sql = "SELECT total  FROM absensi WHERE bulan = ? AND tahun = ?";
-        $query = $this->db->query($sql,$params);
+        if($params[0]=='00'){//menampilkan per tahun
+             $sql = "SELECT total  FROM absensi WHERE tahun = ?";
+            $query = $this->db->query($sql,$params[1]);
+        }else{
+             $sql = "SELECT total  FROM absensi WHERE bulan = ? AND tahun = ?";
+             $query = $this->db->query($sql,$params);
+        }               
         $query = $query->result_array();
         $total = 0;
         foreach($query as $q):

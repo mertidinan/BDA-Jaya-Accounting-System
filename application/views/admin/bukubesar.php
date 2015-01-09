@@ -38,15 +38,16 @@
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
 								<select id="selectbln" name="bln" class="input-sm form-control">
-									<option value="1">Januari</option>
-									<option value="2">Februari</option>
-									<option value="3">Maret</option>
-									<option value="4">April</option>
-									<option value="5">Mei</option>
-									<option value="6">Juni</option>
-									<option value="7">Juli</option>
-									<option value="8">Agustus</option>
-									<option value="9">September</option>
+									<option value="00">Semua Bulan</option>
+									<option value="01">Januari</option>
+									<option value="02">Februari</option>
+									<option value="03">Maret</option>
+									<option value="04">April</option>
+									<option value="05">Mei</option>
+									<option value="06">Juni</option>
+									<option value="07">Juli</option>
+									<option value="08">Agustus</option>
+									<option value="09">September</option>
 									<option value="10">Oktober</option>
 									<option value="11">November</option>
 									<option value="12">Desember</option>
@@ -242,10 +243,10 @@
 									<th>Saldo (Rp)</th>
 								</tr>
 								<?php 
+								$totalpiutang = 0;
 								//print_r($piutang);
 								foreach($piutang as $piut):
 								//cek yang sudah dibayarkan
-								$totalpiutang = 0;
 								$this->db->where('id_transaksi',$piut['id_transaksi']);//cek transaksi sesuai dengan id trannsksi
 								$transaksi = $this->db->get('transaksi');
 								$transaksi = $transaksi->row_array();
@@ -255,10 +256,10 @@
 										<td><?php echo date('d',strtotime($piut['tanggal']))?></td>
 										<td><?php echo $piut['keterangan'];?></td>
 										<td></td>
-										<td><?php echo number_format($piutang);$totalpiutang = $totalpiutang + $piutang; ?></td>
+										<td><?php echo number_format($piutang);?></td>
 										<td></td>
 										<td></td>
-										<td><?php echo number_format($totalpiutang);?></td>
+										<td><?php echo number_format($totalpiutang + $piutang);?></td>
 									</tr>
 								<?php endforeach;
 								$neraca = array('tipe'=>'piutang','value'=>$totalpiutang,'pos'=>'debit');
@@ -295,10 +296,10 @@
 									<td><?php echo number_format($total);?></td>
 								</tr>
 								<?php
+								endforeach;
 								$this->db->where('id_kat_masuk',$a['kategori']);
 								$query = $this->db->get('kategori_pemasukan');//select ke table pemasukan
 								$query = $query->row_array();
-								endforeach;
 								$neraca=array('tipe'=>$query['det_kat_masuk'],'value'=>$total,'pos'=>'kredit');
 								array_push($data['neraca'], $neraca);
 								?>
