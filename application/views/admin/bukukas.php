@@ -42,7 +42,7 @@
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
 								<select id="selecttgl" name="tgl" class="input-sm form-control">
-									<option value='00'>Pilih Tanggal</option>
+									<option value='00'>Semua Tanggal</option>
 									<?php for($x=1;$x<=31;$x++){
 									if($x<10){
 										$x = '0'.$x;
@@ -55,7 +55,7 @@
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputEmail2">Email address</label>
 								<select id="selectbln" name="bln" class="input-sm form-control">
-									<option onclick="changedate(00)" value="00">Semua Bulan</option>
+									<option onchange="changedate(00)" value="00">Semua Bulan</option>
 									<option value="01">Januari</option>
 									<option value="02">Februari</option>
 									<option value="03">Maret</option>
@@ -66,7 +66,7 @@
 									<option value="08">Agustus</option>
 									<option value="09">September</option>
 									<option value="10">Oktober</option>
-									<option value="11">Nopember</option>
+									<option value="11">November</option>
 									<option value="12">Desember</option>
 								</select>
 							</div>
