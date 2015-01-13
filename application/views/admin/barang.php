@@ -59,7 +59,7 @@
 					<!-- menu -->
 					<div class="col-md-6">
 						<a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Barang Baru</a>
-						<a onclick="tambahStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Tambah Stok</a>
+						<!-- <a onclick="tambahStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Tambah Stok</a> -->
 						<!-- <a onclick="kurangiStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Kurangi Stok</a> -->
 						<!-- <a onclick="closeAll()" href="#" class="btn btn-default btn-xs" href="">x</a> -->
 						<!-- modal tambah barang -->
@@ -88,37 +88,6 @@
 												<?php foreach($kategori as $k):?>
 													<option value="<?php echo $k['id_kat_barang'];?>"><?php echo $k['des_kat_barang'];?></option>
 												<?php endforeach;?>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
-										<div class="col-lg-4">
-											<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
-												<?php foreach($pemasok as $p):?>
-													<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
-												<?php endforeach;?>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
-										<div class="col-lg-4">
-											<input name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStok" class="col-lg-2 control-label"><small>Stok</small></label>
-										<div class="col-lg-4">
-											<input name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
-										<div class="col-lg-4">
-											<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
-												<option value="lunas">Lunas</option>		
-												<option value="hutang">Hutang</option>													
 											</select>
 										</div>
 									</div>

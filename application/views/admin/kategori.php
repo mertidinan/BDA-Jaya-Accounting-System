@@ -1,3 +1,8 @@
+<script type="text/javascript">
+	function tambahKategori(){
+		$('#form-tambahbarang').toggle('fast');
+	}
+</script>
 <div class="container">
 	<div class="col-md-12">
 		<ol class="breadcrumb">
@@ -17,7 +22,7 @@
 				<div class="panel-body">
 					<!-- menu -->
 					<div class="col-md-6">
-						<a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Kategori Baru</a>
+						<a onclick="tambahKategori()" href="#addbarang" class="btn btn-primary btn-xs">+ Kategori Baru</a>
 						
 						<!-- modal tambah barang -->
 						<div class="col-md-12">

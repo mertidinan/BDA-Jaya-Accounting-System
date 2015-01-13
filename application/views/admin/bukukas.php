@@ -109,7 +109,7 @@
 									<div class="form-group">
 										<label for="inputPassword1" class="col-lg-2 control-label">Rp</label>
 										<div class="col-lg-10">
-											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Password">
+											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Jumlah, masukan angka tanpa '.'">
 										</div>
 									</div>
 									<div class="form-group">
@@ -161,7 +161,7 @@
 									<div class="form-group">
 										<label for="inputPassword1" class="col-lg-2 control-label">Rp</label>
 										<div class="col-lg-10">
-											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Password">
+											<input name="inputRp" type="number" class="form-control" id="inputPassword1" placeholder="Jumlah, masukan angka tanpa '.'">
 										</div>
 									</div>
 									<div class="form-group">

@@ -26,7 +26,6 @@ class gudang extends base {
 		}
 		echo $response;
 	}
-
 	public function barang(){
 		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('barang').className = 'active';});</script>";
 		$data['title'] = 'Gudang';
@@ -73,7 +72,7 @@ class gudang extends base {
 		$data['title'] = 'Pemasok';
 		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('pemasok').className = 'active';});</script>";
 		$data['pemasok'] = $this->m_gudang->semuaPemasok();
-		$this->baseView('gudang/pemasok',$data);
+		$this->baseView($this->agent->referrer(),$data);
 	}
 
 	//////////////ALL ABOUT PROCESS
@@ -84,10 +83,10 @@ class gudang extends base {
 		$noseri = $post['inputSeri'];
 		$nama = $post['inputNama'];
 		$kategori = $post['inputKategori'];
-		$hargabeli = $post['inputHargaBeli'];
-		$stok = $post['inputStok'];
-		$hargajual = $hargabeli+($hargabeli*0.01);//set harga jual
-		$status = $post['statusTransaksi'];
+		$hargabeli = 0;
+		$stok = 0;
+		$hargajual = 0;//set harga jual
+		$status = 'lunas';
 		$pemasok = null;
 		//cek apakah nomor seri sudah ada
 		$this->load->library('form_validation');
@@ -130,7 +129,6 @@ class gudang extends base {
 						'id_barang' => $id_barang,
 						'id_pegawai' =>$by,
 						'id_kategori'=>$kategori,
-						'id_pemasok'=>$pemasok,
 						'activity'=>$activity
 						);
 					if($this->m_gudang->tambahActivity($params)){
@@ -144,7 +142,7 @@ class gudang extends base {
 		} else { //tidak sesuai rule
 			echo ("<SCRIPT LANGUAGE='JavaScript'>
 				window.alert('Gagal Tambah Barang, Nomor Seri Sudah Ada !');
-				window.location.href='".site_url('gudang')."';
+				window.location.href='".site_url($this->agent->referrer())."';
 			</SCRIPT>");	
 		}
 	}
@@ -214,7 +212,7 @@ class gudang extends base {
 		$kategori = $this->input->post('inputKategori');
 		$params = array('des_kat_barang'=>$kategori);
 		$this->db->insert('kategori_barang',$params);
-		redirect(site_url('gudang/kategori'));
+		redirect($this->agent->referrer());
 	}
 	//hapus kategori
 	public function hapuskategori(){
@@ -228,13 +226,13 @@ class gudang extends base {
 		$alamat = $this->input->post('inputAlamat');
 		$params = array('nama'=>$pemasok,'alamat'=>$alamat);
 		$this->db->insert('pemasok',$params);
-		redirect(site_url('gudang/pemasok'));
+		redirect(site_url($this->agent->referrer()));
 	}
 	//hapus pemasok
 	public function hapusPemasok(){
 		$id = $this->input->get('id');
 		$this->db->delete('pemasok',array('id_pemasok'=>$id));
-		redirect(site_url('gudang/pemasok'));
+		redirect(site_url($this->agent->referrer()));
 	}
 	//edit data kategori barang / pemasok
 	public function editdata(){
@@ -279,7 +277,7 @@ class gudang extends base {
 				);
 			$this->db->where('id_pemasok',$id);
 			$this->db->update('pemasok',$data);
-			redirect(site_url('gudang/pemasok'));
+			redirect(site_url($this->agent->referrer()));
 		}
 	}
 	//tambah pasokan
@@ -317,6 +315,12 @@ class gudang extends base {
 		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('pasokan').className = 'active';});</script>";
 		$data['pasokan'] = $this->m_gudang->semua_pasokan();
 		$this->baseView('gudang/pasokan',$data);
+	}
+	public function cetakpasokan(){
+		print_r($_GET);
+		$params = array($_GET['tgl'],$_GET['bln'],$_GET['thn']);
+		$pasokan = '';
+		// $this->load->view('gudang/cetakpasokan',$data);
 	}
 	//proses tambah stok
 	public function proses_tambah_stok(){

@@ -37,10 +37,36 @@ class m_gudang extends CI_Model{
 			return $query->result_array();
 		} else {return array();}
 	}
+	//lihat semua pasokan berdasarkan waktu
+	public function semua_pasokan_by_time(){
+		$sql = "SELECT ";
+		$query = $this->db->query($sql,$params);
+		if($query->num_rows()>0){
+			return $query->result_array();
+		}else{
+			return array();
+		}
+	}
 	//pasokan by id pasokan
 	public function pasokan_by_id($id){
 		$this->db->where('id_pasokan',$id);
 		$query = $this->db->get('pasokan');
 		return $query->row_array();
+	}
+	//pasokan item
+	public function pasokan_item($id){
+		$this->db->where('id_pasokan',$id);
+		$query = $this->db->get('pasokan_item');
+		$sql = "SELECT barang.nama AS 'barang', barang.no_seri AS 'noseri',pasokan_item.harga_beli AS 'harga_beli',pasokan_item.jumlah AS 'jumlah',pasokan_item.subtotal_beli AS 'subtotal_beli'
+		FROM pasokan_item INNER JOIN barang
+		ON barang.id_barang = pasokan_item.id_barang
+		WHERE pasokan_item.id_pasokan = ?;
+		";
+		$query = $this->db->query($sql,$id);
+		if($query->num_rows()>0){
+			return $query->result_array();
+		}else{
+			return array();
+		}
 	}
 }

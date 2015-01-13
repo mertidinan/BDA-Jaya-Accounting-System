@@ -39,6 +39,9 @@
 			}
 		});
 	}
+	function cetakLaporan(){//detail cetak laporan
+		$('#cetakFilter').toggle('fast');
+	}
 </script>
 <div class="container">
 	<div class="col-md-12">
@@ -66,7 +69,33 @@
 					<!-- menu -->
 					<div class="col-md-6">
 						<a href="<?php echo site_url('gudang/tambah_pasokan')?>" class="btn btn-primary btn-xs">+ Tambah Pasokan</a>
-						
+						<a onclick="cetakLaporan()" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-print"></span></a>
+						<form action="<?php echo site_url('gudang/cetakpasokan')?>" id="cetakFilter" style="display:none;padding:5px 0" class="form-inline" role="form">
+							<div class="form-group">
+							<select name="tgl" class="input-sm" required>
+								<option>Tgl</option>
+								<?php for($i=1;$i<=31;$i++){
+									echo '<option value="'.$i.'">'.$i.'</option>';
+								}
+								?>
+							</select>
+							<select name="bln" class="input-sm" required>
+								<option>Bln</option>
+								<?php for($i=1;$i<=12;$i++){
+									echo '<option value="'.$i.'">'.$i.'</option>';
+								}
+								?>
+							</select>
+							<select name="thn" class="input-sm" required>
+								<option>Thn</option>
+								<?php for($i=1998;$i<=date('Y');$i++){
+									echo '<option value="'.$i.'">'.$i.'</option>';
+								}
+								?>
+							</select>
+							</div>
+							<button type="submit" class="btn btn-default btn-xs">cetak</button>
+						</form>
 						<!-- modal tambah barang -->
 						<div class="col-md-12">
 							<!-- form untuk tambah barang -->
@@ -130,7 +159,7 @@
 								<div class="btn-group">
 									<button onclick="detailPasokan(<?php echo $p['id_pasokan'];?>)" class="btn btn-xs btn-primary">Detail</button>
 									<button onclick="cekBayar(<?php echo $p['id_pasokan']?>)" class="btn btn-xs btn-primary">Bayar</button>
-									<a onclick="return confirm('anda yakin!')" href="<?php echo site_url('gudang/hapus_pasokan?id='.$p['id_pasokan'])?>" class="btn btn-xs btn-primary">Hapus</a>
+									<a onclick="return confirm('anda yakin!')" href="<?php echo site_url('gudang/hapus_pasokan?id='.$p['id_pasokan'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
 								</div>
 							</td>
 						</tr>
@@ -158,9 +187,9 @@
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+</div><!-- /.modal -->
 
-  <div class="modal fade" id="modalBayar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalBayar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
