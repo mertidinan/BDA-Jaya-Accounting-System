@@ -37,6 +37,81 @@ class m_gudang extends CI_Model{
 			return $query->result_array();
 		} else {return array();}
 	}
+	//cetak pasokan//
+	public function cetakPasokan($d,$m,$y){
+		//get data form db
+		if($d==0&&$m!=0&&$y!=0){//menampilkan semua tanggal
+			
+			$params = array($m,$y);
+			$sql = "SELECT pasokan.id_pasokan AS 'id_pasokan', pemasok.nama AS 'pemasok',tgl, pegawai.nama AS oleh, 
+			rp, rp_bayar,rp + rp_kembali AS 'dibayar', status,
+			barang.nama AS 'barang',
+			pasokan_item.jumlah AS 'jumlah',
+			pasokan_item.harga_beli AS 'harga',pasokan_item.subtotal_beli AS 'subtotal'
+			FROM pasokan
+			INNER JOIN pegawai ON pegawai.id_pegawai = pasokan.oleh
+			INNER JOIN pemasok ON pasokan.pemasok = pemasok.id_pemasok
+			INNER JOIN pasokan_item ON pasokan_item.id_pasokan = pasokan.id_pasokan
+			INNER JOIN barang ON pasokan_item.id_barang = barang.id_barang
+			WHERE 
+			MONTH(pasokan.tgl) = ? AND YEAR(pasokan.tgl) = ?
+			ORDER BY pasokan.id_pasokan DESC";
+			$query = $this->db->query($sql,$params);
+		}else if($d!=0&&$m==0&&$y!=0){//menampilkan semua bulan
+			
+			$params = array($d,$y);
+			$sql = "SELECT pasokan.id_pasokan AS 'id_pasokan', pemasok.nama AS 'pemasok',tgl, pegawai.nama AS oleh, rp, rp_bayar,rp + rp_kembali AS 'dibayar', status,
+			barang.nama AS 'barang',
+			pasokan_item.jumlah AS 'jumlah',
+			pasokan_item.harga_beli AS 'harga',pasokan_item.subtotal_beli AS 'subtotal'
+			FROM pasokan
+			INNER JOIN pegawai ON pegawai.id_pegawai = pasokan.oleh
+			INNER JOIN pemasok ON pasokan.pemasok = pemasok.id_pemasok
+			INNER JOIN pasokan_item ON pasokan_item.id_pasokan = pasokan.id_pasokan
+			INNER JOIN barang ON pasokan_item.id_barang = barang.id_barang
+			WHERE 
+			DAY(pasokan.tgl) = ? AND YEAR(pasokan.tgl) = ?
+			ORDER BY pasokan.id_pasokan DESC";
+			$query = $this->db->query($sql,$params);
+		}else if($d==0&&$m==0&&$y!=0){//menampilkan semua tahun
+			$params = array($y);
+			$sql = "SELECT pasokan.id_pasokan AS 'id_pasokan', pemasok.nama AS 'pemasok',tgl, pegawai.nama AS oleh, rp, rp_bayar,rp + rp_kembali AS 'dibayar', status,
+			barang.nama AS 'barang',
+			pasokan_item.jumlah AS 'jumlah',
+			pasokan_item.harga_beli AS 'harga',pasokan_item.subtotal_beli AS 'subtotal' 
+			FROM pasokan
+			INNER JOIN pegawai ON pegawai.id_pegawai = pasokan.oleh
+			INNER JOIN pemasok ON pasokan.pemasok = pemasok.id_pemasok
+			INNER JOIN pasokan_item ON pasokan_item.id_pasokan = pasokan.id_pasokan
+			INNER JOIN barang ON pasokan_item.id_barang = barang.id_barang
+			WHERE 
+			YEAR(pasokan.tgl) = ?
+			ORDER BY pasokan.id_pasokan DESC";
+			$query = $this->db->query($sql,$params);
+		}else{//berdasarkan tanggal bulan dan tahun
+			
+			$params = array($d,$m,$y);
+			$sql = "SELECT pasokan.id_pasokan AS 'id_pasokan', pemasok.nama AS 'pemasok',tgl, pegawai.nama AS oleh, rp, rp_bayar,rp + rp_kembali AS 'dibayar', status,
+			barang.nama AS 'barang',
+			pasokan_item.jumlah AS 'jumlah',
+			pasokan_item.harga_beli AS 'harga',pasokan_item.subtotal_beli AS 'subtotal'
+			FROM pasokan
+			INNER JOIN pegawai ON pegawai.id_pegawai = pasokan.oleh
+			INNER JOIN pemasok ON pasokan.pemasok = pemasok.id_pemasok
+			INNER JOIN pasokan_item ON pasokan_item.id_pasokan = pasokan.id_pasokan
+			INNER JOIN barang ON pasokan_item.id_barang = barang.id_barang
+			WHERE 
+			DAY(pasokan.tgl) = ? AND MONTH(pasokan.tgl) = ? AND YEAR(pasokan.tgl) = ?
+			ORDER BY pasokan.id_pasokan DESC";
+			$query = $this->db->query($sql,$params);
+		}
+		//exe query
+		if($query->num_rows()>0){
+			return $query->result_array();
+		} else {return array();}
+	}
+
+	//end of cetak pasokan//
 	//lihat semua pasokan berdasarkan waktu
 	public function semua_pasokan_by_time(){
 		$sql = "SELECT ";

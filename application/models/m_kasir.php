@@ -16,6 +16,7 @@ class m_kasir extends CI_Model{
 		transaksi.bayar AS 'bayar',transaksi.kembali AS 'kembali', transaksi.status AS 'status', pelanggan.nama_lengkap AS 'nama_lengkap'
 		FROM transaksi
 		INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan
+		ORDER BY transaksi.id_transaksi DESC
 		LIMIT ".$limit." OFFSET ".$offset;
 		$query = $this->db->query($sql);
 		return $query->result_array();
@@ -27,6 +28,7 @@ class m_kasir extends CI_Model{
 		FROM transaksi
 		INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan
 		WHERE transaksi.status = '".$status."'
+		ORDER BY transaksi.id_transaksi DESC
 		LIMIT ".$limit." OFFSET ".$offset;
 		$query = $this->db->query($sql);
 		return $query->result_array();

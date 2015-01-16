@@ -4,10 +4,10 @@
 	<title>Cetak Detail Pasokan</title>
 	<style type="text/css">
 	.mytable {
-		width: 400px;border:1px solid #000;padding:5px;
+		width: 100%;border:1px solid #000;padding:5px;
 	}
 	.mytable2 {
-		width: 600px;border:1px solid #000;padding:5px;
+		width: 100%;border:1px solid #000;padding:5px;
 	}
 	.mytable td,.mytable th{
 		width: 50%;padding:5px;
@@ -21,22 +21,24 @@
 <h2>DATA PASOKAN BDA-JAYA</h2>
 <p>dicetak pada <?php echo date('d-m-Y h:i:s')?></p>
 <hr/>
-<h3>Detail :</h3>
-<table class="mytable">
-<tr><td><strong>tanggal pasokan</strong></td><td><?php echo $detpasokan['tgl'];?></td></tr>
-<tr><td><strong>id pemasok</strong></td><td><?php echo $detpasokan['pemasok'];?></td></tr>
-<tr><td><strong>Total Harga</strong></td><td>Rp <?php echo number_format($detpasokan['rp']);?></td></tr>
-<tr><td><strong>Total Bayar</strong></td><td>Rp<?php echo number_format($detpasokan['rp_bayar']);?></td></tr>
-<tr><td><strong>Status</strong></td><td><?php if($detpasokan['rp_bayar']>$detpasokan['rp']){echo 'lunas';}else{echo 'hutang';}?></td></tr>
-</table>
-<br/>
+<p>laporan per 
+<?php
+	if($_GET['tgl']==0 && $_GET['bln']!=0 && $_GET['thn']!=0){
+		echo 'Bulan '.$_GET['bln'].' Tahun : '.$_GET['thn'];
+	}else if($_GET['tgl']==0 && $_GET['bln']==0 && $_GET['thn']!=0){
+		echo 'Tahun : '.$_GET['thn'];
+	}else{
+		echo $_GET['tgl'].'/'.$_GET['bln'].'/'.$_GET['thn'];
+	}
+?>
+</p>
 <h3>Item :</h3>
 <table class="mytable2">
 <tr>
-	<th>Barang</th><th>Jumlah</th><th>Harga Beli</th><th>Total Harga Beli</th>
+	<th>Nama Pemasok</th><th>Tanggal</th><th>Barang</th><th>Jumlah</th><th>Harga</th><th>Subtotal</th>
 </tr>
-<?php foreach($pasokanitem as $pa):?>
-	<tr><td><?php echo $pa['barang']?></td><td><?php echo $pa['jumlah']?></td><td><?php echo $pa['harga_beli']?></td><td><?php echo $pa['subtotal_beli']?></td></tr>
+<?php foreach($pasokan as $p):?>
+	<tr><td><?php echo $p['pemasok']?></td><td><?php echo $p['tgl']?></td><td><?php echo $p['barang']?></td><td><?php echo $p['jumlah']?></td><td>Rp <?php echo  number_format($p['harga'])?></td><td>Rp <?php echo number_format($p['subtotal'])?></td></tr>
 <?php endforeach;?>
 </table>
 </body>

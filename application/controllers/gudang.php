@@ -72,7 +72,7 @@ class gudang extends base {
 		$data['title'] = 'Pemasok';
 		$data['script'] = "<script> $(document).ready(function(){ document.getElementById('pemasok').className = 'active';});</script>";
 		$data['pemasok'] = $this->m_gudang->semuaPemasok();
-		$this->baseView($this->agent->referrer(),$data);
+		$this->baseView('gudang/pemasok',$data);
 	}
 
 	//////////////ALL ABOUT PROCESS
@@ -226,7 +226,7 @@ class gudang extends base {
 		$alamat = $this->input->post('inputAlamat');
 		$params = array('nama'=>$pemasok,'alamat'=>$alamat);
 		$this->db->insert('pemasok',$params);
-		redirect(site_url($this->agent->referrer()));
+		redirect($this->agent->referrer());
 	}
 	//hapus pemasok
 	public function hapusPemasok(){
@@ -317,15 +317,29 @@ class gudang extends base {
 		$this->baseView('gudang/pasokan',$data);
 	}
 	public function cetakpasokan(){
-		print_r($_GET);
-		$params = array($_GET['tgl'],$_GET['bln'],$_GET['thn']);
-		$pasokan = '';
-		// $this->load->view('gudang/cetakpasokan',$data);
-	}
+		// print_r($_GET);
+		//jika tidak atur tanggal atau bulan
+		// if(empty($_GET['tgl']) || empty($_GET['bln'])){
+		// 	redirect('gudang/pasokan');
+		// }
+		$data['pasokan'] = $this->m_gudang->cetakPasokan($_GET['tgl'],$_GET['bln'],$_GET['thn']);
+		if(empty($data['pasokan'])){// print_r($pasokan);
+			echo 'tidak ada data ditemukan';
+		}else{
+			$this->load->view('gudang/cetakpasokan',$data);
+		// Load library
+			$html = $this->output->get_output();
+		//echo $html;
+			$this->load->library('dompdf_gen');
+			$this->dompdf->load_html($html);
+			$this->dompdf->render();
+			$this->dompdf->stream('laporan pasokan'.".pdf");//pdf file name
+		}
+}
 	//proses tambah stok
-	public function proses_tambah_stok(){
-		$this->load->library('cart');
-		$data['title'] = "Memproses...";
+public function proses_tambah_stok(){
+	$this->load->library('cart');
+	$data['title'] = "Memproses...";
 		// set status pembayaran
 		if(isset($_POST['btn_bayar'])) { //jika pelanggan bayar
 			$status = 'lunas';
@@ -391,18 +405,18 @@ class gudang extends base {
 				} else {
 					echo 'data gagal masuk tabel pengeluaran';
 				}				
-		} else{
+			} else{
 			//gagal masuk ketabel pasokan
+			}
+
 		}
-		
-	}
 
 	//hapus pasokan
-	public function hapus_pasokan() {
-		$id = $this->input->get('id');
-		$this->db->where('id_pasokan',$id);
-		$this->db->delete('pasokan');
-		redirect(site_url('gudang/pasokan'));
-	}
+		public function hapus_pasokan() {
+			$id = $this->input->get('id');
+			$this->db->where('id_pasokan',$id);
+			$this->db->delete('pasokan');
+			redirect(site_url('gudang/pasokan'));
+		}
 
-}
+	}

@@ -118,6 +118,19 @@
 						</tr>						
 						<?php $i=1;foreach($transaksi AS $t):?>
 						<tr>
+							<?php
+							//status pembayaran
+							if(($t['total_bayar']-$t['bayar'])<=0){//jika pembayaran telah lunas
+								$status = 'lunas';
+								//jika status tidak sesuai maka update status
+								if($t['status']!=$status){
+									//update database
+									$data = array('status'=>'lunas');
+									$this->db->where('id_transaksi',$t['id_transaksi']);
+									$this->db->update('transaksi',$data);
+								}
+							}
+							?>
 							<td><?php echo $i;?></td>
 							<td><?php echo $t['id_transaksi']?></td>
 							<td><?php echo $t['nama_lengkap']?></td>

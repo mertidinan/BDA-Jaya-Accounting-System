@@ -73,22 +73,24 @@
 						<form action="<?php echo site_url('gudang/cetakpasokan')?>" id="cetakFilter" style="display:none;padding:5px 0" class="form-inline" role="form">
 							<div class="form-group">
 							<select name="tgl" class="input-sm" required>
-								<option>Tgl</option>
+								<option value="">Tgl</option>
+								<option value="0">semua</option>
 								<?php for($i=1;$i<=31;$i++){
 									echo '<option value="'.$i.'">'.$i.'</option>';
 								}
 								?>
 							</select>
 							<select name="bln" class="input-sm" required>
-								<option>Bln</option>
+								<option value="">Bln</option>
+								<option value="0">semua</option>
 								<?php for($i=1;$i<=12;$i++){
 									echo '<option value="'.$i.'">'.$i.'</option>';
 								}
 								?>
 							</select>
 							<select name="thn" class="input-sm" required>
-								<option>Thn</option>
-								<?php for($i=1998;$i<=date('Y');$i++){
+								<option value="">Thn</option>
+								<?php for($i=2014;$i<=date('Y');$i++){
 									echo '<option value="'.$i.'">'.$i.'</option>';
 								}
 								?>
