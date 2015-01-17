@@ -284,10 +284,26 @@ class kasir extends base {
 		echo '<tr><td>id pelanggan</td><td>nama</td></tr>';
 		foreach($pelanggan as $p):
 			echo '<tr>';
-			echo '<td>'.$p['id_pelanggan'].'</td>';
-			echo '<td><a href="#" onclick="addPelanggan('.$p['id_pelanggan'].',\''.$p['nama_lengkap'].'\')">'.$p['nama_lengkap'].'</a></td>';
-			echo '</tr>';
+		echo '<td>'.$p['id_pelanggan'].'</td>';
+		echo '<td><a href="#" onclick="addPelanggan('.$p['id_pelanggan'].',\''.$p['nama_lengkap'].'\')">'.$p['nama_lengkap'].'</a></td>';
+		echo '</tr>';
 		endforeach;
 		echo '</table>';
 	}
-}
+	//////////// 
+	// ALL ABOUT
+	////////////
+	public function cetaknota(){
+		$idtransaksi = $this->input->get('id');//get id transaksi
+		$data['detail'] = $this->m_transaksi->detail_transaksi($idtransaksi);
+		$data['item'] = $this->m_transaksi->show_transaksi_item($idtransaksi);
+		//show detail transaksi;
+		$this->load->view('kasir/cetaknota',$data);
+		$html = $this->output->get_output();
+			//echo $html;
+		$this->load->library('dompdf_gen');
+		$this->dompdf->load_html($html);
+		$this->dompdf->render();
+			$this->dompdf->stream('nota'.".pdf");//pdf file name
+		}
+	}

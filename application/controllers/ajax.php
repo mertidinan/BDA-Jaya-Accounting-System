@@ -12,7 +12,7 @@ class ajax extends base {
 		<p>Tanggal : '.$detail['tgl_transaksi'].'</p>
 		<p>Rp.Total : '.$detail['total_bayar'].',-</p>
 		<p>Status : '.$detail['status'].'</p>
-		<p><a onclick="print()" href="#"><span class="glypichon glypichon-print">print</span></a></p>
+		<p><a href="'.site_url('kasir/cetaknota?id='.$idtransaksi).'"><span class="glypichon glypichon-print">print</span></a></p>
 		<hr/>
 		<h5>Barang Yang Dibeli</h5>
 		<table class="table table-striped">
@@ -32,8 +32,8 @@ class ajax extends base {
 				<td>'.$x.'</td>
 				<td>'.$i['id_barang'].'</td>
 				<td>'.$i['jumlah'].'</td>
-				<td>Rp.'.$i['subtotal'] / $i['jumlah'].',-</td>
-				<td>Rp.'.$i['subtotal'].',-</td>
+				<td>Rp.'.number_format($i['subtotal'] / $i['jumlah']).',-</td>
+				<td>Rp.'.number_format($i['subtotal']).',-</td>
 			</tr>
 			';
 			$x++;
@@ -73,7 +73,7 @@ class ajax extends base {
 				<td>'.$x.'</td>
 				<td>'.$a['tgl'].'</td>						
 				<td>'.$a['oleh'].'</td>
-				<td>Rp.'.$a['rp'].',-</td>
+				<td>Rp.'.number_format($a['rp']).',-</td>
 				<td><a href="#" onclick="deleteAngsuran('.$a['id_angsuran'].','.$idtransaksi.')"><span class="glyphicon glyphicon-trash"></span></a></td>
 			</tr>
 			';	
@@ -89,9 +89,9 @@ class ajax extends base {
 			$sisa_piutang = $detail['total_bayar'] - $total_angsuran;
 			echo '
 			<hr/>
-			<strong>Total Angsuran : </strong> Rp.'.$total_angsuran.',-<br/>
-			<strong>Total Piutang : </strong> Rp.'.$detail['total_bayar'].',-<br/>
-			<strong>Sisa Piutang : </strong> Rp.'.$sisa_piutang.',-<br/>
+			<strong>Total Angsuran : </strong> Rp.'.number_format($total_angsuran).',-<br/>
+			<strong>Total Piutang : </strong> Rp.'.number_format($detail['total_bayar']).',-<br/>
+			<strong>Sisa Piutang : </strong> Rp.'.number_format($sisa_piutang).',-<br/>
 			';
 		}
 
