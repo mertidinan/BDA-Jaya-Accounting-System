@@ -18,7 +18,14 @@
 			<a class="btn btn-primary btn-lg" href="<?php echo site_url('kasir/transaksiBaru')?>">Transaksi Baru</a>
 		</div>
 		<div class="col-md-3">
-			<a class="btn btn-primary btn-lg" href="#">Cetak Bukti</a>
+			<?php
+			//get last id transaksi
+			$this->db->order_by('id_transaksi','DESC');
+			$query = $this->db->get('transaksi',1,0);
+			$query = $query->row_array();
+			$idtransaksi = $query['id_transaksi'];
+			?>
+			<a class="btn btn-primary btn-lg" href="<?php echo site_url('kasir/cetaknota?id='.$idtransaksi)?>">Cetak Bukti</a>
 		</div>
 	</div>
 	</center>

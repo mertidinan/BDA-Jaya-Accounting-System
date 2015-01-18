@@ -1,5 +1,6 @@
 <?php
 echo '
+<h1>Nota</h1>
 <p>Id: '.$detail['id_transaksi'].'</p>
 <p>Tanggal : '.$detail['tgl_transaksi'].'</p>
 <p>Rp.Total : '.number_format($detail['total_bayar']).',-</p>
