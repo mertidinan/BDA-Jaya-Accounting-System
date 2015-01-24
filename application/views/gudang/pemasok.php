@@ -55,9 +55,15 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Alamat dan Kontak</small></label>
+										<label for="inputKategori" class="col-lg-2 control-label"><small>Alamat</small></label>
 										<div class="col-lg-10">
 											<textarea name="inputAlamat" type="text" class="input-sm form-control" id="inputKategori" placeholder="Alamat dan kontak pemasok"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputKategori" class="col-lg-2 control-label"><small>Kontak</small></label>
+										<div class="col-lg-10">
+											<textarea name="inputKontak" type="text" class="input-sm form-control" id="inputKategori" placeholder="Alamat dan kontak pemasok"></textarea>
 										</div>
 									</div>
 									<div class="form-group">
@@ -69,39 +75,41 @@
 								</form>
 							</div>
 							<!-- end of form untuk tambah barang -->							
+						</div>
 					</div>
-				</div>
-				<!-- search -->
-				<div class="col-md-6">
-					
-				</div>
-				<br/>
-				<br/>
-				<table style="font-size:11px" class="table table-striped">
-					<tr>
-						<th>#</th>
-						<th>Nama</th>
-						<th>Alamat dan Kontak</th>
-						<!-- <th>Update terakhir</th> -->
-						<th style="width:100px"></th>
-					</tr>
-					<?php foreach($pemasok AS $p):?>
-					<tr>
-						<td><?php echo $p['id_pemasok']?></td>
-						<td><?php echo $p['nama']?></td>					
-						<td><?php echo $p['alamat']?></td>
-						<td>
-							<div class="btn-group">
-								<a href="<?php echo site_url('gudang/editdata?act=pemasok&id='.$p['id_pemasok'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-								<a onclick="return confirm('Anda yakin!')" href="<?php echo site_url('gudang/hapusPemasok?id='.$p['id_pemasok'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
-							</div>
-						</td>
-					</tr>
-				<?php endforeach;?>
-				</table>
-			</div>
-		</div>
+					<!-- search -->
+					<div class="col-md-6">
 
+					</div>
+					<br/>
+					<br/>
+					<table style="font-size:11px" class="table table-striped">
+						<tr>
+							<th>#</th>
+							<th>Nama</th>
+							<th>Alamat</th>
+							<th>Kontak</th>
+							<!-- <th>Update terakhir</th> -->
+							<th style="width:100px"></th>
+						</tr>
+						<?php foreach($pemasok AS $p):?>
+							<tr>
+								<td><?php echo $p['id_pemasok']?></td>
+								<td><?php echo $p['nama']?></td>					
+								<td><?php echo $p['alamat']?></td>
+								<td><?php echo $p['kontak']?></td>
+								<td>
+									<div class="btn-group">
+										<a href="<?php echo site_url('gudang/editdata?act=pemasok&id='.$p['id_pemasok'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+										<a onclick="return confirm('Anda yakin!')" href="<?php echo site_url('gudang/hapusPemasok?id='.$p['id_pemasok'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
+									</div>
+								</td>
+							</tr>
+						<?php endforeach;?>
+					</table>
+				</div>
+			</div>
+
+		</div>
 	</div>
-</div>
 </div>

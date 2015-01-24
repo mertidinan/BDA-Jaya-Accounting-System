@@ -224,7 +224,8 @@ class gudang extends base {
 	public function tambahPemasok(){
 		$pemasok = $this->input->post('inputPemasok');
 		$alamat = $this->input->post('inputAlamat');
-		$params = array('nama'=>$pemasok,'alamat'=>$alamat);
+		$kontak = $this->input->post('inputKontak');
+		$params = array('nama'=>$pemasok,'alamat'=>$alamat,'kontak'=>$kontak);
 		$this->db->insert('pemasok',$params);
 		redirect($this->agent->referrer());
 	}
@@ -273,11 +274,12 @@ class gudang extends base {
 		} else if(isset($_POST['btn_pemasok'])){
 			$data = array(
 				'nama' => $this->input->post('nama'),
-				'alamat' => $this->input->post('alamat')
+				'alamat' => $this->input->post('alamat'),
+				'kontak'=>$this->input->post('kontak')
 				);
 			$this->db->where('id_pemasok',$id);
 			$this->db->update('pemasok',$data);
-			redirect(site_url($this->agent->referrer()));
+			redirect(site_url('gudang/pemasok'));
 		}
 	}
 	//tambah pasokan

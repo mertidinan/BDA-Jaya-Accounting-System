@@ -14,7 +14,7 @@
 		
 		<?php if(!empty($kategori)){?>
 		<h4>Edit Kategori</h4>
-		<form action="<?php echo site_url('gudang/proses_editdata');?>" method="POST" role="form">
+		<form method="POST" action="<?php echo site_url('gudang/proses_editdata');?>"role="form">
 			<input name="id" type="hidden" value="<?php echo $item['id_kat_barang'];?>">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Nama :</label>
@@ -24,7 +24,7 @@
 		</form>
 		<?php } else { ?>
 		<h4>Edit Pemasok</h4>
-		<form action="<?php echo site_url('gudang/proses_editdata');?>" method="POST"  role="form">
+		<form method="POST" action="<?php echo site_url('gudang/proses_editdata');?>" role="form">
 			<input name="id" type="hidden" value="<?php echo $item['id_pemasok'];?>">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Nama :</label>
@@ -32,7 +32,11 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Alamat :</label>
-				<input name="alamat" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $item['alamat'];?>" placeholder="Masukan Nama Baru">
+				<input name="alamat" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $item['alamat'];?>" placeholder="Masukan alamat">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Kontak :</label>
+				<input name="kontak" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $item['kontak'];?>" placeholder="Masukan kontak">
 			</div>
 			<button name="btn_pemasok" type="submit" class="btn btn-default">Update</button>
 		</form>
