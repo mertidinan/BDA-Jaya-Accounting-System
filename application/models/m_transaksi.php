@@ -14,6 +14,7 @@ class m_transaksi extends CI_Model{
 	//show transaksi item
 	public function show_transaksi_item($id){//parameter adalah id transaksi
 		$this->db->where('id_transaksi',$id);
+		$this->db->join('barang','barang.id_barang=transaksi_item.id_barang');
 		$query = $this->db->get('transaksi_item');
 		if($query->num_rows()>0){
 			return $query->result_array();
