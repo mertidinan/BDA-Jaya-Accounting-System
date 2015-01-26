@@ -255,7 +255,7 @@ class gudang extends base {
 	public function hapusPemasok(){
 		$id = $this->input->get('id');
 		$this->db->delete('pemasok',array('id_pemasok'=>$id));
-		redirect(site_url($this->agent->referrer()));
+		redirect($this->agent->referrer());
 	}
 	//edit data kategori barang / pemasok
 	public function editdata(){

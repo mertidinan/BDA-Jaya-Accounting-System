@@ -44,7 +44,7 @@ class base extends CI_Controller {
 		}
 	}
 	public function admin_logged_in(){
-		if($this->session->userdata('admin_logged_in')){
+		if($this->session->userdata['admin_logged_in']==0){
 			redirect(site_url('admin'));
 		}
 	}
