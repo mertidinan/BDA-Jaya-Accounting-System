@@ -33,17 +33,18 @@ class base extends CI_Controller {
 
 	//////////////////////// LOGIN CHECK
 	public function gudang_logged_in(){
-		if(!$this->session->userdata('gudang_logged_in') || !$this->session->userdata('admin_logged_in')){
+		if($this->session->userdata['gudang_logged_in'] == 0 && $this->session->userdata['admin_logged_in'] == 0){
 			redirect(site_url('login'));
+			// echo $this->session->userdata['gudang_logged_in'];
 		}
 	}
 	public function kasir_logged_in(){
-		if(!$this->session->userdata('kasir_logged_in') || !$this->session->userdata('admin_logged_in')){
-			redirect(site_url('login'));
+		if($this->session->userdata['kasir_logged_in'] == 0 && $this->session->userdata['admin_logged_in']==0){
+			// redirect(site_url('login'));
 		}
 	}
 	public function admin_logged_in(){
-		if(!$this->session->userdata('admin_logged_in')){
+		if($this->session->userdata('admin_logged_in')){
 			redirect(site_url('admin'));
 		}
 	}

@@ -3,7 +3,7 @@ require_once 'application/controllers/base/base.php';
 class gudang extends base {
 	public function __construct(){
 		parent::__construct();
-		// $this->gudang_logged_in();
+		$this->gudang_logged_in();
 	}
 
 	public function index(){
@@ -155,8 +155,18 @@ class gudang extends base {
 	}
 	//edit barang
 	public function editbarang(){
-		$id = $this->uri->segement(3);//id barang
-		
+		$id = $this->uri->segment(3);//id barang
+		$data = array(
+			'no_seri'=>$_POST['inputSeri'],
+			'nama'=>$_POST['inputNama'],
+			'kategori'=>$_POST['inputKategori'],
+			'stok'=>$_POST['inputStok'],
+			'harga_beli'=>$_POST['inputHargaBeli'],
+			'harga_jual'=>$_POST['inputHargaJual'],
+			);
+		$this->db->where('id_barang',$id);
+		$this->db->update('barang',$data);
+		redirect(site_url('gudang/barang'));
 	}
 	//cek seri barang
 	public function cekSeri(){

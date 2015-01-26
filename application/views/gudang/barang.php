@@ -37,7 +37,14 @@
 			}
 		});
 	}
+
 }
+//set harga jual 
+	function setHargaJual(){
+		hargabeli = parseInt($('#inputHB').val());
+		hargajual = (0.10*hargabeli)+hargabeli;
+		$('#inputHJ').val(hargajual);
+	}
 </script>
 <div class="container">
 	<div class="col-md-12">
@@ -58,25 +65,65 @@
 				<div class="panel-body">
 					<!-- menu -->
 					<div class="col-md-6">
-						<a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Barang Baru</a>
 						<!-- <a onclick="tambahStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Tambah Stok</a>
 						<a onclick="kurangiStok()" href="#addbarang" class="btn btn-default btn-xs" href="">+ Kurangi Stok</a>
 						<!-- <a onclick="closeAll()" href="#" class="btn btn-default btn-xs" href="">x</a> -->
 						<!-- modal tambah barang -->
 						<div class="col-md-12">
 							<!-- form untuk tambah barang -->
-							<div style="display:none" id="form-tambahbarang">
-								<?php if(!empty($this->uri->segment(3))){
+							<?php if(!empty($this->uri->segment(3))){
 									//get detail barang by id
-									$id = $this->uri->segment(3);
-									$editbarang = $this->m_barang->showBarangById($id);
-									print_r($editbarang);
-									?>
-									<h4>Edit Barang</h4>
-									<form class="form" action="<?php echo site_url('gudang/editbarang/'.$this->uri->segment(3));?>" method="POST">
-										<label>kode barang <input type="number" name="input_kode" value=""></label>
-									</form>
-									<?php }?>
+								$id = $this->uri->segment(3);
+								$editbarang = $this->m_barang->showBarangById($id);
+								// print_r($editbarang);
+								?>
+								<h4>Edit Barang</h4>
+								<form class="form-horizontal" role="form" action="<?php echo site_url('gudang/editbarang/'.$this->uri->segment(3));?>" method="POST">
+									<div class="form-group">
+										<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
+										<div class="col-lg-10">
+											<input name="inputSeri" type="number" class="input-sm form-control" id="inputSeri" placeholder="No seri barang" value="<?php echo $editbarang['no_seri']?>">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputNama" class="col-lg-2 control-label"><small>Nama</small></label>
+										<div class="col-lg-10">
+											<input name="inputNama" type="text" class="input-sm form-control" id="inputNama" placeholder="Nama barang" value="<?php echo $editbarang['nama']?>">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputKategori" class="col-lg-2 control-label"><small>Kategori</small></label>
+										<div class="col-lg-4">
+											<select name="inputKategori" id="inputKategori" class="input-sm form-control">
+												<?php foreach($kategori as $k):?>
+													<option value="<?php echo $k['id_kat_barang'];?>"><?php echo $k['des_kat_barang'];?></option>
+												<?php endforeach;?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputStok" class="col-lg-2 control-label"><small>Stok</small></label>
+										<div class="col-lg-4">
+											<input name="inputStok" value="<?php echo $editbarang['stok'];?>" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
+										<div class="col-lg-4">
+										<input onkeyup="setHargaJual()" name="inputHargaBeli" type="number" value="<?php echo $editbarang['harga_beli'];?>" id="inputHB" class="input-sm form-control" placeholder="Harga Beli">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Jual</small></label>
+										<div class="col-lg-4">
+										<input name="inputHargaJual" type="number" value="<?php echo $editbarang['harga_jual'];?>" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+										</div>
+									</div>
+									<button class="btn btn-primary" type="submit">Simpan Perubahan</button>
+									<hr/>
+								</form>
+								<?php }?>
+								<div style="display:none" id="form-tambahbarang">
 									<br/>
 									<h4>Tambah Barang Baru</h4>
 									<form method="POST" action="<?php echo site_url('gudang/tambahBarang');?>" class="form-horizontal" role="form">
@@ -138,9 +185,11 @@
 												<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
 											</div>
 										</div>
-										<br/>
+										<br/>										
 									</form>
 								</div>
+								<a onclick="tambahBarang()" href="#addbarang" class="btn btn-primary btn-xs">+ Barang Baru</a>
+								<br/><br/>
 								<!-- end of form untuk tambah barang -->
 								<!-- form tambah stok -->
 								<div style="display:none" id="tambahStok">

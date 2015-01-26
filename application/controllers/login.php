@@ -27,11 +27,13 @@ class login extends base {
 				if($sessionData['bagian']=='gudang') {
 					$sessionData['gudang_logged_in'] = 1;
 					$sessionData['kasir_logged_in'] = 0;
+					$sessionData['admin_logged_in'] = 0;
 					$redirect = site_url('gudang');
 					$bagian = 'Gudang';
 				} else if($sessionData['bagian']=='kasir') {
 					$sessionData['kasir_logged_in'] = 1;
 					$sessionData['gudang_logged_in'] = 0;
+					$sessionData['admin_logged_in'] = 0;
 					$redirect = site_url('kasir');
 					$bagian = 'Kasir';
 				}//activate session
