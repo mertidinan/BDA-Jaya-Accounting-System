@@ -274,7 +274,7 @@
 								<td>
 									<div class="btn-group">
 										<a href="#" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-										<a onclick="return confirm('Anda yakin!')" href="#" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
+										<a onclick="return confirm('Anda yakin!')" href="<?php echo site_url('gudang/hapusBarang?id='.$b['id_barang'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
 									</div>
 								</td>
 							</tr>

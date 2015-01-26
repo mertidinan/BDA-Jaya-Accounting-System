@@ -115,7 +115,7 @@ class gudang extends base {
 					'keterangan' => $keterangan,
 					'rp'=>$rp,
 					'kategori'=>$kategorikeluar,
-					'id_pemasok'=>$pemasok,
+					//'id_pemasok'=>$pemasok,
 					'id_barang'=>$id_barang,
 					'status'=>$status
 					);				
@@ -145,6 +145,13 @@ class gudang extends base {
 				window.location.href='".site_url($this->agent->referrer())."';
 			</SCRIPT>");	
 		}
+	}
+	//hapus barang
+	public function hapusBarang(){
+		$idbarang = $_GET['id'];
+		$this->db->where('id_barang',$idbarang);
+		$this->db->delete('barang');
+		redirect(site_url('gudang/barang'));
 	}
 	//cek seri barang
 	public function cekSeri(){
