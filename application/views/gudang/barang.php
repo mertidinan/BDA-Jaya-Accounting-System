@@ -66,223 +66,234 @@
 						<div class="col-md-12">
 							<!-- form untuk tambah barang -->
 							<div style="display:none" id="form-tambahbarang">
-								<br/>
-								<h4>Tambah Barang Baru</h4>
-								<form method="POST" action="<?php echo site_url('gudang/tambahBarang');?>" class="form-horizontal" role="form">
-									<div class="form-group">
-										<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
-										<div class="col-lg-10">
-											<input name="inputSeri" type="number" class="input-sm form-control" id="inputSeri" placeholder="No seri barang">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputNama" class="col-lg-2 control-label"><small>Nama</small></label>
-										<div class="col-lg-10">
-											<input name="inputNama" type="text" class="input-sm form-control" id="inputNama" placeholder="Nama barang">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Kategori</small></label>
-										<div class="col-lg-4">
-											<select name="inputKategori" id="inputKategori" class="input-sm form-control">
-												<?php foreach($kategori as $k):?>
-													<option value="<?php echo $k['id_kat_barang'];?>"><?php echo $k['des_kat_barang'];?></option>
-												<?php endforeach;?>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
-										<div class="col-lg-4">
-											<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
-												<?php foreach($pemasok as $p):?>
-													<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
-												<?php endforeach;?>
-											</select>
-										</div>
-									</div>
-									<div style="display:none" class="form-group">
-										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
-										<div class="col-lg-4">
-											<input name="inputHargaBeli" type="number" value="0" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
-										</div>
-									</div>
-									<div style="display:none" class="form-group">
-										<label for="inputStok" class="col-lg-2 control-label"><small>Stok</small></label>
-										<div class="col-lg-4">
-											<input name="inputStok" value="0" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
-										</div>
-									</div>
-									<div style="display:none" class="form-group">
-										<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
-										<div class="col-lg-4">
-											<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
-												<option value="lunas">Lunas</option>		
-												<option value="hutang">Hutang</option>													
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-lg-offset-2 col-lg-10">
-											<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
-										</div>
-									</div>
+								<?php if(!empty($this->uri->segment(3))){
+									//get detail barang by id
+									$id = $this->uri->segment(3);
+									$editbarang = $this->m_barang->showBarangById($id);
+									print_r($editbarang);
+									?>
+									<h4>Edit Barang</h4>
+									<form class="form" action="<?php echo site_url('gudang/editbarang/'.$this->uri->segment(3));?>" method="POST">
+										<label>kode barang <input type="number" name="input_kode" value=""></label>
+									</form>
+									<?php }?>
 									<br/>
-								</form>
-							</div>
-							<!-- end of form untuk tambah barang -->
-							<!-- form tambah stok -->
-							<div style="display:none" id="tambahStok">
-								<br/>
-								<h4>Tambah Stok</h4>
-								<form method="POST" action="<?php echo site_url('gudang/tambahStok');?>" class="form-horizontal" role="form">
-									<div class="form-group">
-										<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
-										<div class="col-lg-10">
-											<input onkeyup="cekSeri()" name="inputSeri" type="number" class="input-sm form-control" id="inputSeriTambah" placeholder="No seri barang" value=""><span id="cekresult"></span>
+									<h4>Tambah Barang Baru</h4>
+									<form method="POST" action="<?php echo site_url('gudang/tambahBarang');?>" class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
+											<div class="col-lg-10">
+												<input name="inputSeri" type="number" class="input-sm form-control" id="inputSeri" placeholder="No seri barang">
+											</div>
 										</div>
-									</div>								
-									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
-										<div class="col-lg-4">
-											<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
-												<?php foreach($pemasok as $p):?>
-													<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
-												<?php endforeach;?>
-											</select>
+										<div class="form-group">
+											<label for="inputNama" class="col-lg-2 control-label"><small>Nama</small></label>
+											<div class="col-lg-10">
+												<input name="inputNama" type="text" class="input-sm form-control" id="inputNama" placeholder="Nama barang">
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStok" class="col-lg-2 control-label"><small>Stok Ditambah</small></label>
-										<div class="col-lg-4">
-											<input min="0" name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+										<div class="form-group">
+											<label for="inputKategori" class="col-lg-2 control-label"><small>Kategori</small></label>
+											<div class="col-lg-4">
+												<select name="inputKategori" id="inputKategori" class="input-sm form-control">
+													<?php foreach($kategori as $k):?>
+														<option value="<?php echo $k['id_kat_barang'];?>"><?php echo $k['des_kat_barang'];?></option>
+													<?php endforeach;?>
+												</select>
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
-										<div class="col-lg-4">
-											<input min="0" name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+										<div class="form-group">
+											<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
+											<div class="col-lg-4">
+												<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
+													<?php foreach($pemasok as $p):?>
+														<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
+													<?php endforeach;?>
+												</select>
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
-										<div class="col-lg-4">
-											<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
-												<option value="lunas">Lunas</option>		
-												<option value="hutang">Hutang</option>													
-											</select>
+										<div style="display:none" class="form-group">
+											<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
+											<div class="col-lg-4">
+												<input name="inputHargaBeli" type="number" value="0" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-lg-offset-2 col-lg-10">
-											<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
+										<div style="display:none" class="form-group">
+											<label for="inputStok" class="col-lg-2 control-label"><small>Stok</small></label>
+											<div class="col-lg-4">
+												<input name="inputStok" value="0" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+											</div>
 										</div>
-									</div>
+										<div style="display:none" class="form-group">
+											<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
+											<div class="col-lg-4">
+												<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
+													<option value="lunas">Lunas</option>		
+													<option value="hutang">Hutang</option>													
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
+											</div>
+										</div>
+										<br/>
+									</form>
+								</div>
+								<!-- end of form untuk tambah barang -->
+								<!-- form tambah stok -->
+								<div style="display:none" id="tambahStok">
 									<br/>
-								</form>
-							</div>
-							<!-- end of form tambah stok -->
-							<!-- form kurangi stok -->
-							<div style="display:none" id="kurangiStok">
-								<br/>
-								<h4>Kurangi Stok</h4>
-								<form method="POST" action="<?php echo site_url('gudang/tambahBarang');?>" class="form-horizontal" role="form">
-									<div class="form-group">
-										<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
-										<div class="col-lg-10">
-											<input name="inputSeri" type="number" class="input-sm form-control" id="inputSeriKurang" placeholder="No seri barang">
+									<h4>Tambah Stok</h4>
+									<form method="POST" action="<?php echo site_url('gudang/tambahStok');?>" class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
+											<div class="col-lg-10">
+												<input onkeyup="cekSeri()" name="inputSeri" type="number" class="input-sm form-control" id="inputSeriTambah" placeholder="No seri barang" value=""><span id="cekresult"></span>
+											</div>
+										</div>								
+										<div class="form-group">
+											<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
+											<div class="col-lg-4">
+												<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
+													<?php foreach($pemasok as $p):?>
+														<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
+													<?php endforeach;?>
+												</select>
+											</div>
 										</div>
-									</div>								
-									<div class="form-group">
-										<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
-										<div class="col-lg-4">
-											<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
-												<?php foreach($pemasok as $p):?>
-													<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
-												<?php endforeach;?>
-											</select>
+										<div class="form-group">
+											<label for="inputStok" class="col-lg-2 control-label"><small>Stok Ditambah</small></label>
+											<div class="col-lg-4">
+												<input min="0" name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStok" class="col-lg-2 control-label"><small>Stok Ditambah</small></label>
-										<div class="col-lg-4">
-											<input name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+										<div class="form-group">
+											<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
+											<div class="col-lg-4">
+												<input min="0" name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
-										<div class="col-lg-4">
-											<input name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+										<div class="form-group">
+											<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
+											<div class="col-lg-4">
+												<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
+													<option value="lunas">Lunas</option>		
+													<option value="hutang">Hutang</option>													
+												</select>
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
-										<div class="col-lg-4">
-											<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
-												<option value="lunas">Lunas</option>		
-												<option value="hutang">Hutang</option>													
-											</select>
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
+											</div>
 										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-lg-offset-2 col-lg-10">
-											<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
-										</div>
-									</div>
+										<br/>
+									</form>
+								</div>
+								<!-- end of form tambah stok -->
+								<!-- form kurangi stok -->
+								<div style="display:none" id="kurangiStok">
 									<br/>
-								</form>
+									<h4>Kurangi Stok</h4>
+									<form method="POST" action="<?php echo site_url('gudang/tambahBarang');?>" class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="inputSeri" class="col-lg-2 control-label"><small>No Seri</small></label>
+											<div class="col-lg-10">
+												<input name="inputSeri" type="number" class="input-sm form-control" id="inputSeriKurang" placeholder="No seri barang">
+											</div>
+										</div>								
+										<div class="form-group">
+											<label for="inputKategori" class="col-lg-2 control-label"><small>Pemasok</small></label>
+											<div class="col-lg-4">
+												<select name="inputPemasok" id="inputKategori" class="input-sm form-control">
+													<?php foreach($pemasok as $p):?>
+														<option value="<?php echo $p['id_pemasok'];?>"><?php echo $p['nama'];?></option>
+													<?php endforeach;?>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputStok" class="col-lg-2 control-label"><small>Stok Ditambah</small></label>
+											<div class="col-lg-4">
+												<input name="inputStok" type="number" id="inputStok" class="input-sm form-control" placeholder="Stok">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputHJ" class="col-lg-2 control-label"><small>Harga Beli</small></label>
+											<div class="col-lg-4">
+												<input name="inputHargaBeli" type="number" id="inputHJ" class="input-sm form-control" placeholder="Harga Beli">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="inputStatus" class="col-lg-2 control-label"><small>Status</small></label>
+											<div class="col-lg-4">
+												<select name="statusTransaksi" id="inputStatus" class="input-sm form-control">														
+													<option value="lunas">Lunas</option>		
+													<option value="hutang">Hutang</option>													
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<button name="btnTambah" type="submit" class="btn btn-primary">+ Tambah</button>
+											</div>
+										</div>
+										<br/>
+									</form>
+								</div>
+								<!-- end of form kurangi stok -->
 							</div>
-							<!-- end of form kurangi stok -->
 						</div>
-					</div>
-					<!-- search -->
-					<div class="col-md-6">
-						<form method="get">
-							<div class="input-group">
-								<input name="q" type="text" class="form-control" placeholder="pencarian barang">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-								</span>
-							</div><!-- /input-group -->
-						</form>
+						<!-- search -->
+						<div class="col-md-6">
+							<form method="get">
+								<div class="input-group">
+									<input name="q" type="text" class="form-control" placeholder="pencarian barang">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+									</span>
+								</div><!-- /input-group -->
+							</form>
+							<br/>
+						</div>
 						<br/>
-					</div>
-					<br/>
-					<br/>
-					<table style="font-size:11px" class="table table-striped">
-						<tr>
-							<th>#</th>
-							<th>Code</th>
-							<th>Nama</th>
-							<th>Kategori</th>
-							<th>Harga Beli</th>
-							<th>Harga Jual</th>
-							<th>Stok</th>
-							<!-- <th>Update terakhir</th> -->
-							<th style="width:100px"></th>
-						</tr>
-						<?php foreach($barang AS $b):?>
+						<br/>
+						<table style="font-size:11px" class="table table-striped">
 							<tr>
-								<td><?php echo $b['id_barang']?></td>
-								<td><?php echo $b['no_seri']?></td>
-								<td><?php echo $b['nama']?></td>
-								<td><?php echo $b['kategori']?></td>
-								<td>Rp<?php echo $b['harga_beli']?>,-</td>
-								<td>Rp<?php echo $b['harga_jual']?>,-</td>
-								<td><?php echo $b['stok']?></td>
-								<!-- <td>herman 12/08/2014 18:00</td> -->
-								<td>
-									<div class="btn-group">
-										<a href="#" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-										<a onclick="return confirm('Anda yakin!')" href="<?php echo site_url('gudang/hapusBarang?id='.$b['id_barang'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
-									</div>
-								</td>
+								<th>#</th>
+								<th>Code</th>
+								<th>Nama</th>
+								<th>Kategori</th>
+								<th>Harga Beli</th>
+								<th>Harga Jual</th>
+								<th>Stok</th>
+								<!-- <th>Update terakhir</th> -->
+								<th style="width:100px"></th>
 							</tr>
-						<?php endforeach;?>
-					</table>
+							<?php foreach($barang AS $b):?>
+								<tr>
+									<td><?php echo $b['id_barang']?></td>
+									<td><?php echo $b['no_seri']?></td>
+									<td><?php echo $b['nama']?></td>
+									<td><?php echo $b['kategori']?></td>
+									<td>Rp<?php echo $b['harga_beli']?>,-</td>
+									<td>Rp<?php echo $b['harga_jual']?>,-</td>
+									<td><?php echo $b['stok']?></td>
+									<!-- <td>herman 12/08/2014 18:00</td> -->
+									<td>
+										<div class="btn-group">
+											<a href="<?php echo site_url('gudang/barang/'.$b['id_barang'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+											<a onclick="return confirm('Anda yakin!')" href="<?php echo site_url('gudang/hapusBarang?id='.$b['id_barang'])?>" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
+										</div>
+									</td>
+								</tr>
+							<?php endforeach;?>
+						</table>
+					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
 	</div>
-</div>

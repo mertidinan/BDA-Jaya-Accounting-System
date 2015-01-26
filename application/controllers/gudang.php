@@ -123,7 +123,7 @@ class gudang extends base {
 					$sql = "SELECT nama FROM pemasok WHERE id_pemasok = ?";
 					$query = $this->db->query($sql,$pemasok);
 					$querypemasok = $query->row_array();
-					$namapemasok = $querypemasok['nama'];
+					$namapemasok = null;
 					$activity = "Tambah barang baru dengan nomor seri ".$noseri." dari ".$namapemasok;
 					$params = array(
 						'id_barang' => $id_barang,
@@ -152,6 +152,11 @@ class gudang extends base {
 		$this->db->where('id_barang',$idbarang);
 		$this->db->delete('barang');
 		redirect(site_url('gudang/barang'));
+	}
+	//edit barang
+	public function editbarang(){
+		$id = $this->uri->segement(3);//id barang
+		
 	}
 	//cek seri barang
 	public function cekSeri(){
