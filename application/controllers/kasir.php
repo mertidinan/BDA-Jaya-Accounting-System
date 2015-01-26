@@ -301,9 +301,9 @@ class kasir extends base {
 		$this->load->view('kasir/cetaknota',$data);
 		$html = $this->output->get_output();
 			//echo $html;
-		// $this->load->library('dompdf_gen');
-		// $this->dompdf->load_html($html);
-		// $this->dompdf->render();
-		// 	$this->dompdf->stream('nota'.".pdf");//pdf file name
+		$this->load->library('dompdf_gen');
+		$this->dompdf->load_html($html);
+		$this->dompdf->render();
+		$this->dompdf->stream('nota'.".pdf");//pdf file name
 	}
 }

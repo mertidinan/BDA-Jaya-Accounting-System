@@ -51,7 +51,7 @@ class m_kasir extends CI_Model{
 	}
 	//lihat total piutang
 	public function totTransaksiHariIni(){
-		$sql = "SELECT * FROM transaksi WHERE tgl_transaksi = NOW()";
+		$sql = "SELECT * FROM transaksi WHERE DAY(tgl_transaksi) = ".date('d')." AND MONTH(tgl_transaksi) = ".date('m')." AND YEAR(tgl_transaksi) = ".date('Y');
 		$result = $this->db->query($sql);
 		return $result->num_rows();
 	}

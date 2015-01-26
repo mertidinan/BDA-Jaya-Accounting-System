@@ -40,17 +40,18 @@ echo "
 	$x = 1;
 	foreach($item as $i):
 		echo "
-	<tr><center>
+	<tr>
 		<td><center>".$x."</center></td>
 		<td><center>".$i['nama']."</center></td>
 		<td><center>".$i['jumlah']."</center></td>
 		<td><center>Rp.".number_format($i['subtotal'] / $i['jumlah']).",-</center></td>
 		<td><center>Rp.".number_format($i['subtotal']).",-</center></td>
-	<center></tr>
+	</tr>
 	";
 	$x++;
 	endforeach;
-	echo "</table><br/><h3><strong>Total:</strong> Rp".number_format($detail['total_bayar']).",-</h3>";
+	echo "</table>
+	<br/><h3><strong>Total:</strong> Rp".number_format($detail['total_bayar']).",-</h3>";
 	?>
 </body>
 </html>
