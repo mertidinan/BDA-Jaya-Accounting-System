@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 13, 2015 at 01:59 
+-- Generation Time: Jan 27, 2015 at 03:21 
 -- Server version: 5.6.12
 -- PHP Version: 5.5.3
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama`, `telp`, `alamat`, `username`, `password`, `log`) VALUES
-(1, 'Admin BDA Jaya', '628123123123', 'Rahasia dunks', 'admin', 'ac43724f16e9241d990427ab7c8f4228', 95007);
+(1, 'Admin BDA Jaya', '628123123123', 'Rahasia dunks', 'admin', 'ac43724f16e9241d990427ab7c8f4228', 211323);
 
 -- --------------------------------------------------------
 
@@ -113,17 +113,19 @@ CREATE TABLE IF NOT EXISTS `barang` (
   `stok` int(11) NOT NULL,
   PRIMARY KEY (`id_barang`),
   KEY `kategori` (`kategori`,`oleh`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `nama`, `no_seri`, `kategori`, `oleh`, `tanggal`, `harga_beli`, `harga_jual`, `stok`) VALUES
-(2, 'Sarung Hari Raya Edisi Garuda', '112345', 2, 1, '2015-01-10 02:46:17', 60000, 60600, 267),
-(3, 'Baju koko ala Malaysia', '112346', 2, 2, '2015-01-10 02:46:17', 35000, 35350, 665),
+(2, 'Sarung Hari Raya Edisi Garuda', '112345', 2, 1, '2015-01-26 02:36:49', 60000, 60600, 251),
+(3, 'Baju koko ala Malaysia', '112346', 2, 2, '2015-01-26 13:43:14', 0, 0, 661),
 (4, 'Handuk Bayi', '11247', 4, 1, '2015-01-10 02:48:08', 12000, 12120, 70),
-(5, 'Handuk Dewasa', '11223', 4, 0, '2015-01-10 02:17:49', 25000, 25250, 144);
+(5, 'Handuk Dewasa', '11223', 4, 0, '2015-01-10 02:17:49', 25000, 25250, 144),
+(8, 'asisisisi', '1212', 2, 1, '2015-01-26 13:44:41', 3400, 3740, 45),
+(10, 'sdsd', '121212', 2, 1, '2015-01-26 14:00:13', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -143,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `gudang_activity` (
   KEY `id_pegawai` (`id_pegawai`,`id_barang`,`id_kategori`,`id_pemasok`),
   KEY `id_barang` (`id_barang`),
   KEY `id_pemasok` (`id_pemasok`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `gudang_activity`
@@ -161,7 +163,9 @@ INSERT INTO `gudang_activity` (`id_activity`, `id_pegawai`, `id_barang`, `id_kat
 (9, 1, NULL, NULL, 1, 'menambah pasokan dari pemasok : 1 | dengan id pasokan : 8', '2014-11-19 03:22:50'),
 (10, 1, NULL, NULL, 1, 'menambah pasokan dari pemasok : 1 | dengan id pasokan : 9', '2014-11-21 13:02:26'),
 (11, 1, NULL, NULL, 1, 'menambah pasokan dari pemasok : 1 | dengan id pasokan : 10', '2014-11-23 02:15:07'),
-(12, 1, NULL, NULL, 2, 'menambah pasokan dari pemasok : 2 | dengan id pasokan : 11', '2014-11-27 07:24:47');
+(12, 1, NULL, NULL, 2, 'menambah pasokan dari pemasok : 2 | dengan id pasokan : 11', '2014-11-27 07:24:47'),
+(14, 1, 8, 2, NULL, 'Tambah barang baru dengan nomor seri 1212 dari ', '2015-01-26 03:34:00'),
+(16, 1, 10, 2, NULL, 'Tambah barang baru dengan nomor seri 121212 dari ', '2015-01-26 14:00:14');
 
 -- --------------------------------------------------------
 
@@ -178,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `kasir_activity` (
   PRIMARY KEY (`id_activity`),
   KEY `id_pegawai` (`id_pegawai`,`id_transaksi`),
   KEY `id_transaksi` (`id_transaksi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `kasir_activity`
@@ -191,7 +195,12 @@ INSERT INTO `kasir_activity` (`id_activity`, `id_pegawai`, `id_transaksi`, `cata
 (25, 2, 14, 'membuat transaksi baru dengan id : 14', '2015-01-09 06:30:00'),
 (26, 2, 15, 'membuat transaksi baru dengan id : 15', '2015-01-10 02:46:17'),
 (27, 2, 16, 'membuat transaksi baru dengan id : 16', '2015-01-10 02:48:08'),
-(28, 2, 14, 'melayani pembayaran angsuran piutang dengan id : 14', '2015-01-10 02:56:01');
+(28, 2, 14, 'melayani pembayaran angsuran piutang dengan id : 14', '2015-01-10 02:56:01'),
+(29, 2, 17, 'membuat transaksi baru dengan id : 17', '2015-01-16 13:26:45'),
+(30, 2, 18, 'membuat transaksi baru dengan id : 18', '2015-01-17 01:28:57'),
+(31, 2, 19, 'membuat transaksi baru dengan id : 19', '2015-01-17 01:35:29'),
+(32, 2, 20, 'membuat transaksi baru dengan id : 20', '2015-01-25 23:55:50'),
+(33, 2, 21, 'membuat transaksi baru dengan id : 21', '2015-01-26 02:36:49');
 
 -- --------------------------------------------------------
 
@@ -366,8 +375,8 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nama`, `bagian`, `telp`, `alamat`, `username`, `password`, `login_log`) VALUES
-(1, 'Yusuf Akhsan Hidayat', 'gudang', '085645777298', 'Lele 2th Road, Maguwoharjo, Sleman, DIY', 'yussan', 'ac43724f16e9241d990427ab7c8f4228', '2015-01-12 16:40:16'),
-(2, 'Merti Dina Nisab', 'kasir', '08134567890', 'Bethoven St Number 23, Chicago', 'dina', 'ac43724f16e9241d990427ab7c8f4228', '2015-01-13 07:54:56');
+(1, 'Yusuf Akhsan Hidayat', 'gudang', '085645777298', 'Lele 2th Road, Maguwoharjo, Sleman, DIY', 'yussan', 'ac43724f16e9241d990427ab7c8f4228', '2015-01-27 21:20:38'),
+(2, 'Merti Dina Nisab', 'kasir', '08134567890', 'Bethoven St Number 23, Chicago', 'dina', 'ac43724f16e9241d990427ab7c8f4228', '2015-01-27 21:13:38');
 
 -- --------------------------------------------------------
 
@@ -403,16 +412,18 @@ CREATE TABLE IF NOT EXISTS `pemasok` (
   `id_pemasok` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(100) NOT NULL,
   `alamat` varchar(300) NOT NULL,
+  `kontak` varchar(300) NOT NULL,
   PRIMARY KEY (`id_pemasok`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `pemasok`
 --
 
-INSERT INTO `pemasok` (`id_pemasok`, `nama`, `alamat`) VALUES
-(1, 'PT. Gadjah Duduks', 'Surabaya, Jawa Timur, Indonesia'),
-(2, 'Sumber Maju', 'PasarCipulir Jakarta');
+INSERT INTO `pemasok` (`id_pemasok`, `nama`, `alamat`, `kontak`) VALUES
+(1, 'PT. Gadjah Duduks', 'Surabaya, Jawa Timur, Indonesia', ''),
+(2, 'Sumber Maju', 'PasarCipulir Jakarta', ''),
+(3, 'Yusuf Abadi', 'Jl Lele 1 Maguwojarho DIY', '');
 
 -- --------------------------------------------------------
 
@@ -437,7 +448,7 @@ CREATE TABLE IF NOT EXISTS `pemasukan` (
   KEY `kategori` (`kategori`),
   KEY `id_barang` (`id_barang`),
   KEY `id_transaksi` (`id_transaksi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `pemasukan`
@@ -452,7 +463,12 @@ INSERT INTO `pemasukan` (`id_pemasukan`, `tanggal`, `oleh`, `keterangan`, `rp`, 
 (14, '2015-01-10 02:09:27', 1, 'Modal', 20000000, 4, NULL, NULL, NULL, 'lunas', 'masuk'),
 (15, '2015-01-10 02:09:59', 1, 'Peminjaman Kredit', 25000000, 6, NULL, NULL, NULL, 'lunas', 'masuk'),
 (16, '2015-01-10 02:46:17', 2, 'Penjualan dengan id transaksi : 15', 959500, 2, 15, NULL, NULL, 'lunas', 'masuk'),
-(17, '2015-01-10 02:48:08', 2, 'Penjualan dengan id transaksi : 16', 121200, 2, 16, NULL, NULL, 'lunas', 'masuk');
+(17, '2015-01-10 02:48:08', 2, 'Penjualan dengan id transaksi : 16', 121200, 2, 16, NULL, NULL, 'lunas', 'masuk'),
+(18, '2015-01-16 13:26:44', 2, 'Penjualan dengan id transaksi : 17', 868600, 2, 17, NULL, NULL, 'piutang', 'masuk'),
+(19, '2015-01-17 01:28:56', 2, 'Penjualan dengan id transaksi : 18', 60600, 2, 18, NULL, NULL, 'lunas', 'masuk'),
+(20, '2015-01-17 01:35:29', 2, 'Penjualan dengan id transaksi : 19', 0, 2, 19, NULL, NULL, 'lunas', 'masuk'),
+(21, '2015-01-25 23:55:50', 2, 'Penjualan dengan id transaksi : 20', 60600, 2, 20, NULL, NULL, 'lunas', 'masuk'),
+(22, '2015-01-26 02:36:49', 2, 'Penjualan dengan id transaksi : 21', 121200, 2, 21, NULL, NULL, 'piutang', 'masuk');
 
 -- --------------------------------------------------------
 
@@ -476,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `pengeluaran` (
   KEY `kategori` (`kategori`),
   KEY `id_barang` (`id_barang`),
   KEY `id_pasokan` (`id_pasokan`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `pengeluaran`
@@ -498,7 +514,9 @@ INSERT INTO `pengeluaran` (`id_pengeluaran`, `tanggal`, `oleh`, `keterangan`, `r
 (20, '2015-01-10 02:11:38', 1, 'Printer', 500000, 9, NULL, NULL, 'lunas', 'keluar'),
 (21, '2015-01-10 02:12:08', 1, 'Beban Listrik', 150000, 10, NULL, NULL, 'lunas', 'keluar'),
 (22, '2015-01-10 02:13:44', 1, 'Prive', 100000, 13, NULL, NULL, 'lunas', 'keluar'),
-(23, '2015-01-10 02:14:08', 1, 'Beban Pajak', 200000, 11, NULL, NULL, 'lunas', 'keluar');
+(23, '2015-01-10 02:14:08', 1, 'Beban Pajak', 200000, 11, NULL, NULL, 'lunas', 'keluar'),
+(25, '2015-01-26 03:34:00', 1, 'Tambah Barang asasa ke Gudang', 0, 6, 8, NULL, 'lunas', 'keluar'),
+(27, '2015-01-26 14:00:13', 1, 'Tambah Barang sdsd ke Gudang', 0, 6, 10, NULL, 'lunas', 'keluar');
 
 -- --------------------------------------------------------
 
@@ -516,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   `status` enum('lunas','piutang') NOT NULL,
   PRIMARY KEY (`id_transaksi`),
   KEY `id_pelanggan` (`id_pelanggan`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `transaksi`
@@ -524,9 +542,14 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
 
 INSERT INTO `transaksi` (`id_transaksi`, `tgl_transaksi`, `id_pelanggan`, `total_bayar`, `bayar`, `kembali`, `status`) VALUES
 (13, '2015-01-03 13:36:21', 1, 797900, 8000000, 7202100, 'lunas'),
-(14, '2015-01-10 02:56:01', 1, 121200, 121200, -71200, 'piutang'),
+(14, '2015-01-16 13:22:56', 1, 121200, 121200, -71200, 'lunas'),
 (15, '2015-01-10 02:46:17', 1, 959500, 960000, 500, 'lunas'),
-(16, '2015-01-10 02:48:08', 4, 121200, 150000, 28800, 'lunas');
+(16, '2015-01-10 02:48:08', 4, 121200, 150000, 28800, 'lunas'),
+(17, '2015-01-16 13:26:44', 1, 868600, 100000, -768600, 'piutang'),
+(18, '2015-01-17 01:28:56', 1, 60600, 70000, 9400, 'lunas'),
+(19, '2015-01-17 01:35:29', 1, 0, 70000, 9400, 'lunas'),
+(20, '2015-01-25 23:55:50', 4, 60600, 70000, 9400, 'lunas'),
+(21, '2015-01-26 02:36:49', 1, 121200, 50, -121150, 'piutang');
 
 -- --------------------------------------------------------
 
@@ -553,7 +576,12 @@ INSERT INTO `transaksi_item` (`id_transaksi`, `id_barang`, `jumlah`, `subtotal`)
 (14, 2, 2, 121200),
 (15, 3, 10, 353500),
 (15, 2, 10, 606000),
-(16, 4, 10, 121200);
+(16, 4, 10, 121200),
+(17, 2, 12, 727200),
+(17, 3, 4, 141400),
+(18, 2, 1, 60600),
+(20, 2, 1, 60600),
+(21, 2, 2, 121200);
 
 --
 -- Constraints for dumped tables
