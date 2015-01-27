@@ -1,0 +1,22 @@
+html{font-size:11px}
+.login-choose{
+	padding : 20px;
+	background-color: gray;
+}
+.choose-kasir{background-color: #5D9CEC;}
+.choose-gudang{background-color: #ED5565;}
+#kasir-login{font-size:12px;padding:20px;background-color: rgba(93, 156, 236, 0.26);}
+#gudang-login{font-size:12px;padding:20px;background-color: rgba(237, 85, 101, 0.16);}
+a.lc{
+	color : #fff;
+	font-size: 14px;
+	font-weight: bold;
+}
+footer{
+	font-size: 11px;
+	padding:10px;
+	color:gray;
+	line-height: 4px;
+}
+.stats-number{padding:20px;background-color: #3bafda;color:#fff;font-weight:normal;height:80px;}
+.formkas{padding:20px;background-color: rgb(237, 237, 237)}
