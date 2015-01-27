@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//base for all
 class base extends CI_Controller {
 	//constructor
 	public function __construct(){

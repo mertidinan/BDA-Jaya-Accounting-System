@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+//pegawai login
 require_once 'application/controllers/base/base.php';
 ///////////////////////////// DISPLAY
 class login extends base {

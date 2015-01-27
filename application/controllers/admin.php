@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+//admin controller
 require_once 'application/controllers/base/base.php';
 class admin extends base {
 	public function __construct(){
